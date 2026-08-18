@@ -35,7 +35,7 @@ export const TechMatrix = () => {
           <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/[0.04] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[var(--text-muted)] text-[11px] sm:text-xs font-semibold uppercase tracking-wider mb-3 sm:mb-4">
               <Terminal className="w-3.5 h-3.5 text-[#E51A4B] dark:text-[#E2EC07]" />
-              <span>Continuous Auto-Scrolling Tech Engine (Slows on Hover)</span>
+              <span>Continuous Auto-Scrolling Tech Matrix</span>
             </div>
             <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[var(--text-main)] tracking-tight">
               Engineered with <span className="accent-gradient-text">World-Class Tech.</span>
