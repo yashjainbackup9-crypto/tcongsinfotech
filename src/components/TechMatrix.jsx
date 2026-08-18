@@ -7,7 +7,7 @@ export const TechMatrix = () => {
   const [selectedCategory, setSelectedCategory] = useState("ALL");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const categories = ["ALL", ...Object.keys(TECH_STACK)];
+  const categories = Object.keys(TECH_STACK);
 
   // Flatten all tech items for continuous multi-row carousels
   const row1Items = [
