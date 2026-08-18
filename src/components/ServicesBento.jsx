@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Smartphone, 
   Layers, 
@@ -8,9 +8,13 @@ import {
   Rocket, 
   CheckCircle2, 
   ArrowUpRight, 
-  Sparkles,
-  ChevronRight,
-  X
+  Sparkles, 
+  ChevronRight, 
+  ChevronLeft,
+  Pause,
+  Play,
+  X,
+  ArrowRight
 } from 'lucide-react';
 import { SERVICES } from '../data/content';
 import { ScrollReveal } from './ScrollReveal';
@@ -27,6 +31,10 @@ const iconMap = {
 export const ServicesBento = ({ onSelectService }) => {
   const [activeFilter, setActiveFilter] = useState('ALL');
   const [selectedService, setSelectedService] = useState(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAutoPlay, setIsAutoPlay] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
+  const autoPlayRef = useRef(null);
 
   const categories = ['ALL', 'ENGINEERING', 'ENTERPRISE', 'COMMERCE', 'DESIGN', 'GROWTH', 'STRATEGY'];
 
@@ -34,29 +42,79 @@ export const ServicesBento = ({ onSelectService }) => {
     ? SERVICES 
     : SERVICES.filter(s => s.category === activeFilter);
 
+  const totalSlides = filteredServices.length;
+
+  useEffect(() => {
+    setCurrentSlide(0);
+  }, [activeFilter]);
+
+  useEffect(() => {
+    if (isAutoPlay && !isHovered && totalSlides > 1) {
+      autoPlayRef.current = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % totalSlides);
+      }, 4000);
+    }
+    return () => {
+      if (autoPlayRef.current) clearInterval(autoPlayRef.current);
+    };
+  }, [isAutoPlay, isHovered, totalSlides]);
+
+  const handlePrev = () => {
+    setCurrentSlide((prev) => (prev === 0 ? totalSlides - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentSlide((prev) => (prev + 1) % totalSlides);
+  };
+
+  const activeService = filteredServices[currentSlide] || filteredServices[0];
+  const ActiveIcon = iconMap[activeService?.icon] || Sparkles;
+
   return (
-    <section id="services" className="py-16 sm:py-24 lg:py-32 relative">
+    <section id="services" className="py-16 sm:py-24 lg:py-32 relative overflow-hidden">
       
       {/* Subtle ambient light */}
       <div className="ambient-glow w-[350px] sm:w-[400px] h-[350px] sm:h-[400px] bg-[#E51A4B]/10 -left-20 top-1/2 animate-pulse-glow"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Section Header with ScrollReveal */}
+        {/* Section Header */}
         <ScrollReveal animation="fade-up" duration={700}>
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-12 text-left">
             <div>
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E51A4B]/10 border border-[#E51A4B]/20 text-[#E51A4B] text-[11px] sm:text-xs font-semibold uppercase tracking-wider mb-3 sm:mb-4">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>Full-Spectrum Digital Services</span>
+                <span>Full-Spectrum Solutions Carousel</span>
               </div>
               <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[var(--text-main)] tracking-tight">
                 End-to-End Solutions for <span className="primary-gradient-text">Scalable Impact.</span>
               </h2>
             </div>
-            <p className="text-[var(--text-muted)] text-xs sm:text-sm md:text-base max-w-md mt-3 md:mt-0 leading-relaxed">
-              From initial wireframes to global marketplace orchestration, we deliver full-cycle engineering and growth services under one roof.
-            </p>
+            
+            {/* Carousel Navigation Buttons */}
+            <div className="flex items-center gap-2 mt-4 md:mt-0">
+              <button
+                onClick={() => setIsAutoPlay(!isAutoPlay)}
+                className="p-2.5 rounded-full bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors"
+                title={isAutoPlay ? "Pause Auto-play" : "Start Auto-play"}
+              >
+                {isAutoPlay ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+              </button>
+              <button
+                onClick={handlePrev}
+                className="p-2.5 rounded-full bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[var(--text-main)] hover:bg-[#E51A4B] hover:text-white transition-all active:scale-95"
+                aria-label="Previous Service"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                onClick={handleNext}
+                className="p-2.5 rounded-full bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[var(--text-main)] hover:bg-[#E51A4B] hover:text-white transition-all active:scale-95"
+                aria-label="Next Service"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </ScrollReveal>
 
@@ -79,75 +137,107 @@ export const ServicesBento = ({ onSelectService }) => {
           </div>
         </ScrollReveal>
 
-        {/* Bento Grid with Staggered Scroll Animation */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {filteredServices.map((service, idx) => {
-            const Icon = iconMap[service.icon] || Sparkles;
-            return (
-              <ScrollReveal 
-                key={service.id} 
-                animation="fade-up" 
-                delay={idx * 90} 
-                duration={650}
-              >
-                <div
-                  onClick={() => setSelectedService(service)}
-                  className="glass-panel glass-panel-hover p-6 sm:p-8 rounded-2xl sm:rounded-3xl text-left flex flex-col justify-between cursor-pointer group relative overflow-hidden active:scale-[0.99] transition-transform h-full"
-                >
-                  {/* Top Row: Icon & Category Tag */}
+        {/* Featured Auto-Changing Service Carousel Hero */}
+        <ScrollReveal animation="fade-up" duration={700}>
+          <div 
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            className="glass-panel p-6 sm:p-10 rounded-3xl border border-black/10 dark:border-white/15 text-left relative overflow-hidden shadow-2xl mb-8"
+          >
+            {/* Auto Advance Progress Bar */}
+            <div className="absolute top-0 left-0 right-0 h-1 bg-black/10 dark:bg-white/10">
+              <div 
+                key={currentSlide}
+                className="h-full bg-gradient-to-r from-[#E51A4B] to-[#E2EC07] transition-all duration-[4000ms] ease-linear"
+                style={{ width: isHovered ? '100%' : '100%' }}
+              ></div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              
+              {/* Left Column */}
+              <div className="lg:col-span-8">
+                <div className="flex items-center gap-4 mb-5">
+                  <div className="w-14 h-14 rounded-2xl bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 flex items-center justify-center text-[#E51A4B] shadow-md">
+                    <ActiveIcon className="w-7 h-7" />
+                  </div>
                   <div>
-                    <div className="flex items-center justify-between mb-4 sm:mb-6">
-                      <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 flex items-center justify-center text-[#E51A4B] group-hover:bg-[#E51A4B] group-hover:text-white group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-md">
-                        <Icon className="w-6 h-6 sm:w-7 sm:h-7" />
-                      </div>
-                      <span className="px-2.5 py-1 rounded-full text-[9px] sm:text-[10px] font-bold tracking-widest uppercase bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[var(--text-muted)] group-hover:border-[#E51A4B]/40 group-hover:text-[#E51A4B] transition-all">
-                        {service.category}
-                      </span>
-                    </div>
-
-                    <h3 className="text-lg sm:text-xl font-bold text-[var(--text-main)] mb-2 group-hover:text-[#E51A4B] transition-colors flex items-center justify-between">
-                      <span>{service.title}</span>
-                      <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 text-[var(--text-subtle)] group-hover:text-[#E51A4B] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform shrink-0" />
+                    <span className="px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase bg-[#E51A4B]/10 text-[#E51A4B] border border-[#E51A4B]/20">
+                      {activeService.category}
+                    </span>
+                    <h3 className="text-2xl sm:text-3xl font-extrabold text-[var(--text-main)] mt-1">
+                      {activeService.title}
                     </h3>
-
-                    <p className="text-[var(--text-muted)] text-xs sm:text-sm leading-relaxed mb-5 sm:mb-6">
-                      {service.description}
-                    </p>
-
-                    {/* Capabilities List (Preview) */}
-                    <div className="space-y-1.5 sm:space-y-2 mb-5 sm:mb-6">
-                      {service.capabilities.slice(0, 3).map((cap, i) => (
-                        <div key={i} className="flex items-center gap-2 text-xs text-[var(--text-main)]">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-[#E51A4B] dark:text-[#E2EC07] shrink-0" />
-                          <span className="line-clamp-1">{cap}</span>
-                        </div>
-                      ))}
-                    </div>
                   </div>
-
-                  {/* Bottom Row: Tags & Metrics */}
-                  <div className="pt-3.5 sm:pt-4 border-t border-black/10 dark:border-white/[0.08] flex flex-col gap-2.5 sm:gap-3">
-                    <div className="flex flex-wrap gap-1.5">
-                      {service.tags.slice(0, 3).map((tag, i) => (
-                        <span key={i} className="text-[10px] sm:text-[11px] px-2 py-0.5 rounded-md bg-black/[0.03] dark:bg-white/[0.04] text-[var(--text-muted)] font-medium">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="flex items-center justify-between text-[11px] sm:text-xs text-[var(--text-muted)] font-medium">
-                      <span className="text-[#E51A4B] dark:text-[#E2EC07] font-semibold">{service.metrics}</span>
-                      <span className="text-[var(--text-subtle)] group-hover:text-[var(--text-main)] flex items-center gap-1 font-semibold">
-                        Details <ChevronRight className="w-3.5 h-3.5" />
-                      </span>
-                    </div>
-                  </div>
-
                 </div>
-              </ScrollReveal>
-            );
-          })}
-        </div>
+
+                <p className="text-[var(--text-muted)] text-sm sm:text-base leading-relaxed mb-6">
+                  {activeService.description}
+                </p>
+
+                {/* Capabilities */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-6">
+                  {activeService.capabilities.map((cap, i) => (
+                    <div key={i} className="flex items-center gap-2.5 p-3 rounded-xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 text-xs text-[var(--text-main)]">
+                      <CheckCircle2 className="w-4 h-4 text-[#E51A4B] dark:text-[#E2EC07] shrink-0" />
+                      <span className="line-clamp-1">{cap}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-black/10 dark:border-white/10">
+                  <div className="text-xs text-[var(--text-muted)] font-medium">
+                    SLA & Metric: <strong className="text-[#E51A4B] dark:text-[#E2EC07]">{activeService.metrics}</strong>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => setSelectedService(activeService)}
+                      className="px-5 py-2.5 rounded-full bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs font-semibold text-[var(--text-main)] hover:border-[#E51A4B] transition-colors"
+                    >
+                      View Deep Dive
+                    </button>
+                    <button
+                      onClick={() => onSelectService(activeService.title)}
+                      className="px-6 py-2.5 rounded-full bg-[#E51A4B] hover:bg-[#D01540] text-white text-xs font-bold transition-all shadow-lg shadow-[#E51A4B]/30 hover:scale-105 active:scale-95 flex items-center gap-1.5"
+                    >
+                      <span>Inquire Now</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Carousel Quick Selector Tiles */}
+              <div className="lg:col-span-4 flex flex-col gap-2.5">
+                <div className="text-xs font-bold uppercase tracking-wider text-[var(--text-subtle)] mb-1">
+                  All Specialized Pillars ({totalSlides})
+                </div>
+                {filteredServices.map((service, idx) => {
+                  const isCurrent = idx === currentSlide;
+                  return (
+                    <button
+                      key={service.id}
+                      onClick={() => setCurrentSlide(idx)}
+                      className={`p-3 rounded-xl text-left transition-all border flex items-center justify-between group ${
+                        isCurrent
+                          ? 'bg-[#E51A4B]/10 border-[#E51A4B] text-[#E51A4B] dark:text-white font-bold scale-[1.01]'
+                          : 'bg-black/[0.02] dark:bg-white/[0.02] border-black/5 dark:border-white/5 text-[var(--text-muted)] hover:bg-black/[0.04] dark:hover:bg-white/[0.04]'
+                      }`}
+                    >
+                      <div className="text-xs font-semibold line-clamp-1">
+                        {service.title}
+                      </div>
+                      <ChevronRight className={`w-3.5 h-3.5 shrink-0 transition-transform ${isCurrent ? 'text-[#E51A4B] translate-x-0.5' : 'opacity-30'}`} />
+                    </button>
+                  );
+                })}
+              </div>
+
+            </div>
+
+          </div>
+        </ScrollReveal>
 
       </div>
 

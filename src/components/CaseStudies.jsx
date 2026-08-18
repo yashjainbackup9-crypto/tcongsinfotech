@@ -1,119 +1,227 @@
-import React from 'react';
-import { ArrowUpRight, TrendingUp, Sparkles, Star, Quote } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { 
+  ArrowUpRight, 
+  TrendingUp, 
+  Sparkles, 
+  Star, 
+  ChevronLeft, 
+  ChevronRight, 
+  Pause, 
+  Play,
+  ArrowRight
+} from 'lucide-react';
 import { CASE_STUDIES, TESTIMONIALS } from '../data/content';
 import { ScrollReveal } from './ScrollReveal';
 
 export const CaseStudies = ({ onOpenConsultation }) => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAutoPlay, setIsAutoPlay] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
+  const autoPlayRef = useRef(null);
+
+  const totalSlides = CASE_STUDIES.length;
+
+  useEffect(() => {
+    if (isAutoPlay && !isHovered) {
+      autoPlayRef.current = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % totalSlides);
+      }, 4000);
+    }
+    return () => {
+      if (autoPlayRef.current) clearInterval(autoPlayRef.current);
+    };
+  }, [isAutoPlay, isHovered, totalSlides]);
+
+  const handlePrev = () => {
+    setCurrentSlide((prev) => (prev === 0 ? totalSlides - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentSlide((prev) => (prev + 1) % totalSlides);
+  };
+
+  const activeStudy = CASE_STUDIES[currentSlide];
+
   return (
-    <section id="case-studies" className="py-16 sm:py-24 border-t border-black/5 dark:border-white/[0.06] bg-black/[0.01] dark:bg-[#0C0C10] relative">
+    <section id="case-studies" className="py-16 sm:py-24 border-t border-black/5 dark:border-white/[0.06] bg-black/[0.01] dark:bg-[#0C0C10] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <ScrollReveal animation="fade-up" duration={700}>
-          <div className="text-left max-w-2xl mb-10 sm:mb-16">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E51A4B]/10 dark:bg-[#E2EC07]/10 border border-[#E51A4B]/20 dark:border-[#E2EC07]/20 text-[#E51A4B] dark:text-[#E2EC07] text-[11px] sm:text-xs font-semibold uppercase tracking-wider mb-3 sm:mb-4">
-              <TrendingUp className="w-3.5 h-3.5" />
-              <span>Proven Track Record</span>
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-14 text-left">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E51A4B]/10 dark:bg-[#E2EC07]/10 border border-[#E51A4B]/20 dark:border-[#E2EC07]/20 text-[#E51A4B] dark:text-[#E2EC07] text-[11px] sm:text-xs font-semibold uppercase tracking-wider mb-3 sm:mb-4">
+                <TrendingUp className="w-3.5 h-3.5" />
+                <span>Proven Impact</span>
+              </div>
+              <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[var(--text-main)] tracking-tight">
+                Real Metrics, <span className="accent-gradient-text">Real Growth.</span>
+              </h2>
             </div>
-            <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[var(--text-main)] tracking-tight">
-              Real Metrics, <span className="accent-gradient-text">Real Growth.</span>
-            </h2>
-            <p className="text-[var(--text-muted)] text-xs sm:text-sm md:text-base mt-3 sm:mt-4 leading-relaxed">
-              Explore how we partnered with global brands to engineer scalable digital systems, accelerate marketplace revenues, and achieve measurable ROI.
-            </p>
+            
+            {/* Carousel Controls */}
+            <div className="flex items-center gap-2.5 mt-4 md:mt-0">
+              <button
+                onClick={() => setIsAutoPlay(!isAutoPlay)}
+                className="p-2.5 rounded-full bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors"
+                title={isAutoPlay ? "Pause Auto-play" : "Start Auto-play"}
+              >
+                {isAutoPlay ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+              </button>
+              <button
+                onClick={handlePrev}
+                className="p-2.5 rounded-full bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[var(--text-main)] hover:bg-[#E51A4B] hover:text-white transition-all active:scale-95"
+                aria-label="Previous Case Study"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                onClick={handleNext}
+                className="p-2.5 rounded-full bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[var(--text-main)] hover:bg-[#E51A4B] hover:text-white transition-all active:scale-95"
+                aria-label="Next Case Study"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </ScrollReveal>
 
-        {/* Case Studies Grid with Staggered Scroll Animation */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-14 sm:mb-20">
-          {CASE_STUDIES.map((study, idx) => (
-            <ScrollReveal
-              key={idx}
-              animation="fade-up"
-              delay={idx * 120}
-              duration={650}
-            >
-              <div className="glass-panel glass-panel-hover p-6 sm:p-8 rounded-2xl sm:rounded-3xl text-left flex flex-col justify-between border border-black/5 dark:border-white/[0.08] group h-full">
+        {/* Featured Case Study Auto-Changing Carousel Card */}
+        <ScrollReveal animation="fade-up" duration={700}>
+          <div 
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            className="glass-panel p-6 sm:p-10 rounded-3xl border border-black/10 dark:border-white/15 text-left relative overflow-hidden shadow-2xl mb-16"
+          >
+            {/* Top Auto Progress Bar */}
+            <div className="absolute top-0 left-0 right-0 h-1 bg-black/10 dark:bg-white/10">
+              <div 
+                key={currentSlide}
+                className="h-full bg-gradient-to-r from-[#E51A4B] to-[#E2EC07] transition-all duration-[4000ms] ease-linear"
+                style={{ width: isHovered ? '100%' : '100%' }}
+              ></div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              
+              {/* Left Column: Metrics and Title */}
+              <div className="lg:col-span-7 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center justify-between mb-4 sm:mb-6">
-                    <span className="text-[10px] sm:text-[11px] font-bold tracking-widest uppercase text-[#E51A4B] bg-[#E51A4B]/10 px-3 py-1 rounded-full border border-[#E51A4B]/20">
-                      {study.category}
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-[11px] font-bold tracking-widest uppercase text-[#E51A4B] bg-[#E51A4B]/10 px-3.5 py-1 rounded-full border border-[#E51A4B]/20">
+                      {activeStudy.category}
                     </span>
-                    <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 text-[var(--text-subtle)] group-hover:text-[#E51A4B] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    <span className="text-xs text-[var(--text-muted)] font-mono">
+                      Case Study {currentSlide + 1} of {totalSlides}
+                    </span>
                   </div>
 
-                  <div className="text-2xl sm:text-3xl font-extrabold text-[var(--text-main)] mb-1">
-                    {study.metric}
-                  </div>
-                  <div className="text-xs font-mono text-[#E51A4B] dark:text-[#E2EC07] font-semibold mb-3 sm:mb-4">
-                    {study.subMetric}
-                  </div>
-
-                  <h3 className="text-base sm:text-lg font-bold text-[var(--text-main)] mb-1.5 sm:mb-2 group-hover:text-[#E51A4B] transition-colors">
-                    {study.title}
+                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[var(--text-main)] mb-3">
+                    {activeStudy.title}
                   </h3>
-                  <div className="text-[11px] sm:text-xs text-[var(--text-muted)] font-medium mb-3 sm:mb-4">
-                    Client: {study.client}
+
+                  <div className="text-xs sm:text-sm text-[var(--text-muted)] font-medium mb-5">
+                    Client Partner: <strong className="text-[var(--text-main)]">{activeStudy.client}</strong>
                   </div>
 
-                  <p className="text-[var(--text-muted)] text-xs sm:text-sm leading-relaxed mb-5 sm:mb-6">
-                    {study.description}
+                  <p className="text-[var(--text-muted)] text-sm sm:text-base leading-relaxed mb-6">
+                    {activeStudy.description}
                   </p>
+
+                  <div className="flex flex-wrap gap-2 mb-8">
+                    {activeStudy.tags.map((tag, i) => (
+                      <span key={i} className="text-xs font-mono px-3 py-1 rounded-lg bg-black/[0.03] dark:bg-white/[0.04] text-[var(--text-main)] border border-black/5 dark:border-white/5">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
-                <div className="flex flex-wrap gap-1.5 pt-3.5 sm:pt-4 border-t border-black/10 dark:border-white/10">
-                  {study.tags.map((t, i) => (
-                    <span key={i} className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/[0.03] dark:bg-white/[0.04] text-[var(--text-muted)] border border-black/5 dark:border-white/5">
-                      {t}
-                    </span>
-                  ))}
+                <div className="flex items-center gap-4 pt-4 border-t border-black/10 dark:border-white/10">
+                  <button
+                    onClick={onOpenConsultation}
+                    className="px-6 py-3 rounded-full bg-[#E51A4B] hover:bg-[#D01540] text-white font-bold text-xs sm:text-sm transition-all shadow-lg shadow-[#E51A4B]/30 hover:scale-105 active:scale-95 flex items-center gap-2"
+                  >
+                    <span>Request Similar Case Study 🚀</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
-            </ScrollReveal>
-          ))}
-        </div>
 
-        {/* Client Testimonials Carousel / Grid */}
+              {/* Right Column: High-Impact ROI Stat Box */}
+              <div className="lg:col-span-5 flex flex-col justify-center">
+                <div className="p-8 sm:p-10 rounded-2xl bg-gradient-to-br from-black/[0.04] dark:from-white/[0.06] to-black/[0.01] dark:to-white/[0.01] border border-black/10 dark:border-white/10 text-center relative overflow-hidden group">
+                  <div className="text-5xl sm:text-6xl font-black text-[var(--text-main)] tracking-tight mb-2 group-hover:scale-105 transition-transform duration-300">
+                    {activeStudy.metric}
+                  </div>
+                  <div className="text-sm font-mono text-[#E51A4B] dark:text-[#E2EC07] font-bold uppercase tracking-wider mb-4">
+                    {activeStudy.subMetric}
+                  </div>
+                  <div className="text-xs text-[var(--text-muted)] leading-relaxed">
+                    Measured directly post-launch via production telemetry & analytics.
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Slide Indicator Dots */}
+            <div className="flex items-center justify-center gap-2 mt-8">
+              {CASE_STUDIES.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentSlide(i)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    i === currentSlide ? 'w-8 bg-[#E51A4B]' : 'w-2 bg-black/20 dark:bg-white/20 hover:bg-black/40 dark:hover:bg-white/40'
+                  }`}
+                  aria-label={`Go to slide ${i + 1}`}
+                ></button>
+              ))}
+            </div>
+
+          </div>
+        </ScrollReveal>
+
+        {/* Continuous Auto-Scrolling Testimonial Marquee Carousel */}
         <div className="pt-10 sm:pt-12 border-t border-black/10 dark:border-white/[0.08]">
           <ScrollReveal animation="fade-up" duration={700}>
-            <div className="text-center max-w-xl mx-auto mb-8 sm:mb-12">
+            <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10">
               <h3 className="text-xl sm:text-2xl font-bold text-[var(--text-main)]">What Founders & Product Leaders Say</h3>
-              <p className="text-xs sm:text-sm text-[var(--text-muted)] mt-1.5 sm:mt-2">Trusted across 4 continents by engineering and commerce executives</p>
+              <p className="text-xs sm:text-sm text-[var(--text-muted)] mt-1.5">Trusted across 4 continents by engineering and commerce executives</p>
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-            {TESTIMONIALS.map((t, i) => (
-              <ScrollReveal
-                key={i}
-                animation="fade-up"
-                delay={i * 100}
-                duration={600}
-              >
-                <div className="glass-panel p-6 sm:p-8 rounded-2xl sm:rounded-3xl text-left border border-black/5 dark:border-white/[0.06] flex flex-col justify-between hover:scale-[1.01] transition-transform h-full">
+          {/* Continuous Auto-Scroll Carousel Container */}
+          <div className="relative flex overflow-x-hidden group py-2">
+            <div className="flex gap-6 animate-[scroll_35s_linear_infinite] group-hover:[animation-play-state:paused] whitespace-nowrap">
+              {[...TESTIMONIALS, ...TESTIMONIALS, ...TESTIMONIALS].map((t, i) => (
+                <div
+                  key={i}
+                  className="glass-panel p-6 sm:p-7 rounded-2xl sm:rounded-3xl text-left border border-black/5 dark:border-white/[0.06] flex flex-col justify-between w-[320px] sm:w-[380px] shrink-0 shadow-lg whitespace-normal"
+                >
                   <div>
-                    <div className="flex items-center gap-1 text-amber-400 mb-3 sm:mb-4">
+                    <div className="flex items-center gap-1 text-amber-400 mb-3">
                       {[...Array(5)].map((_, starIdx) => (
-                        <Star key={starIdx} className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-amber-400 text-amber-400" />
+                        <Star key={starIdx} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
                       ))}
                     </div>
-                    <p className="text-[var(--text-main)] text-xs sm:text-sm italic leading-relaxed mb-5 sm:mb-6">
+                    <p className="text-[var(--text-main)] text-xs sm:text-sm italic leading-relaxed mb-5">
                       "{t.quote}"
                     </p>
                   </div>
 
-                  <div className="pt-3.5 sm:pt-4 border-t border-black/10 dark:border-white/10 flex items-center justify-between">
+                  <div className="pt-3.5 border-t border-black/10 dark:border-white/10 flex items-center justify-between">
                     <div>
                       <div className="font-bold text-[var(--text-main)] text-xs sm:text-sm">{t.author}</div>
-                      <div className="text-[11px] sm:text-xs text-[var(--text-muted)]">{t.role}</div>
+                      <div className="text-[11px] text-[var(--text-muted)]">{t.role}</div>
                     </div>
-                    <div className="text-[10px] sm:text-xs font-semibold text-[var(--text-muted)] bg-black/[0.03] dark:bg-white/[0.05] px-2 sm:px-2.5 py-1 rounded-full">
+                    <div className="text-[10px] sm:text-xs font-semibold text-[var(--text-muted)] bg-black/[0.03] dark:bg-white/[0.05] px-2.5 py-1 rounded-full">
                       {t.location}
                     </div>
                   </div>
                 </div>
-              </ScrollReveal>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
 
