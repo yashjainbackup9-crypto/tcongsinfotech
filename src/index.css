@@ -40,6 +40,10 @@
     --nav-bg: rgba(255, 255, 255, 0.88);
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     font-family: var(--font-sans);
     background-color: var(--bg-page);
@@ -51,6 +55,21 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
     letter-spacing: -0.025em;
+  }
+
+  /* Accessible Focus Rings */
+  :focus-visible {
+    outline: 2px solid #E51A4B;
+    outline-offset: 2px;
+  }
+
+  button:focus-visible, 
+  a:focus-visible, 
+  input:focus-visible, 
+  select:focus-visible, 
+  textarea:focus-visible {
+    outline: 2px solid #E51A4B !important;
+    outline-offset: 2px !important;
   }
 }
 
@@ -64,14 +83,35 @@
 }
 
 .glass-panel-hover {
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-panel-hover:hover {
   background: var(--bg-card-hover);
   border-color: var(--border-card-hover);
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.15), 0 0 24px rgba(229, 26, 75, 0.12);
+}
+
+/* Interactive Element States */
+.interactive-chip {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.interactive-chip:hover {
+  transform: translateY(-1.5px);
+  border-color: rgba(229, 26, 75, 0.4);
+  box-shadow: 0 4px 12px rgba(229, 26, 75, 0.1);
+}
+
+.interactive-btn {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.interactive-btn:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.15);
+}
+.interactive-btn:active {
+  transform: scale(0.97);
 }
 
 /* Gradient Text Utilities */

@@ -92,10 +92,10 @@ export const CostEstimator = ({ onBookEstimate }) => {
                     <button
                       key={pt.id}
                       onClick={() => setProjectType(pt.id)}
-                      className={`p-3 sm:p-3.5 rounded-xl text-left text-xs font-semibold transition-all border active:scale-[0.99] ${
+                      className={`p-3 sm:p-3.5 rounded-xl text-left text-xs font-semibold transition-all duration-200 border focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none ${
                         projectType === pt.id
-                          ? 'bg-[#E51A4B]/15 border-[#E51A4B] text-[#E51A4B] dark:text-white font-bold scale-[1.01]'
-                          : 'bg-black/[0.02] dark:bg-white/[0.03] border-black/5 dark:border-white/5 text-[var(--text-muted)] hover:bg-black/[0.05] dark:hover:bg-white/[0.06]'
+                          ? 'bg-[#E51A4B]/15 border-[#E51A4B] text-[#E51A4B] dark:text-white font-bold scale-[1.01] shadow-sm'
+                          : 'bg-black/[0.02] dark:bg-white/[0.03] border-black/5 dark:border-white/5 text-[var(--text-muted)] hover:border-[#E51A4B]/30 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-[var(--text-main)]'
                       }`}
                     >
                       {pt.label}
@@ -117,10 +117,10 @@ export const CostEstimator = ({ onBookEstimate }) => {
                     <button
                       key={t.id}
                       onClick={() => setTier(t.id)}
-                      className={`p-3 sm:p-4 rounded-xl text-left transition-all border flex flex-col justify-between active:scale-[0.99] ${
+                      className={`p-3 sm:p-4 rounded-xl text-left transition-all duration-200 border flex flex-col justify-between focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none ${
                         tier === t.id
                           ? 'bg-[#E51A4B] text-white font-bold border-[#E51A4B] shadow-md scale-[1.01]'
-                          : 'bg-black/[0.02] dark:bg-white/[0.03] border-black/5 dark:border-white/5 text-[var(--text-muted)] hover:bg-black/[0.05] dark:hover:bg-white/[0.06]'
+                          : 'bg-black/[0.02] dark:bg-white/[0.03] border-black/5 dark:border-white/5 text-[var(--text-muted)] hover:border-[#E51A4B]/30 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-[var(--text-main)]'
                       }`}
                     >
                       <div className="text-xs font-extrabold mb-1">{t.label}</div>
@@ -144,17 +144,18 @@ export const CostEstimator = ({ onBookEstimate }) => {
                   {addons.map((add) => {
                     const isChecked = selectedAddons.includes(add.id);
                     return (
-                      <div
+                      <button
+                        type="button"
                         key={add.id}
                         onClick={() => toggleAddon(add.id)}
-                        className={`p-3 sm:p-3.5 rounded-xl border flex items-center justify-between cursor-pointer text-xs transition-all active:scale-[0.99] ${
+                        className={`p-3 sm:p-3.5 rounded-xl border flex items-center justify-between cursor-pointer text-xs transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none ${
                           isChecked
                             ? 'bg-[#E51A4B]/10 dark:bg-[#E2EC07]/10 border-[#E51A4B]/40 dark:border-[#E2EC07]/40 text-[var(--text-main)] font-semibold'
-                            : 'bg-black/[0.02] dark:bg-white/[0.02] border-black/5 dark:border-white/5 text-[var(--text-muted)] hover:bg-black/[0.04] dark:hover:bg-white/[0.05]'
+                            : 'bg-black/[0.02] dark:bg-white/[0.02] border-black/5 dark:border-white/5 text-[var(--text-muted)] hover:border-[#E51A4B]/30 hover:bg-black/[0.04] dark:hover:bg-white/[0.05]'
                         }`}
                       >
                         <div className="flex items-center gap-2.5">
-                          <div className={`w-4 h-4 rounded flex items-center justify-center shrink-0 ${
+                          <div className={`w-4 h-4 rounded flex items-center justify-center shrink-0 transition-colors ${
                             isChecked ? 'bg-[#E51A4B] text-white font-bold' : 'border border-black/20 dark:border-white/20'
                           }`}>
                             {isChecked && <Check className="w-3 h-3 stroke-[3]" />}
@@ -162,7 +163,7 @@ export const CostEstimator = ({ onBookEstimate }) => {
                           <span className="text-[11px] sm:text-xs text-[var(--text-main)]">{add.label}</span>
                         </div>
                         <span className="font-mono text-[#E51A4B] dark:text-[#E2EC07] text-[10px] sm:text-[11px] font-bold shrink-0 pl-1">+${add.price}</span>
-                      </div>
+                      </button>
                     );
                   })}
                 </div>
@@ -174,7 +175,7 @@ export const CostEstimator = ({ onBookEstimate }) => {
           {/* Right: Instant Estimate Card */}
           <div className="lg:col-span-5 flex flex-col">
             <ScrollReveal animation="fade-left" duration={700} className="h-full">
-              <div className="glass-panel p-6 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl border border-[#E51A4B]/40 text-left flex flex-col justify-between h-full relative overflow-hidden shadow-2xl bg-gradient-to-b from-white dark:from-[#161620] to-slate-50 dark:to-[#0E0E14]">
+              <div className="glass-panel p-6 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl border border-[#E51A4B]/40 text-left flex flex-col justify-between h-full relative overflow-hidden shadow-2xl bg-gradient-to-b from-white dark:from-[#161620] to-slate-50 dark:to-[#0E0E14] group">
                 
                 <div>
                   <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E51A4B]/20 text-[#E51A4B] text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-4 sm:mb-6">
@@ -184,7 +185,7 @@ export const CostEstimator = ({ onBookEstimate }) => {
                   <div className="text-[11px] sm:text-xs text-[var(--text-muted)] font-medium mb-0.5 sm:mb-1">
                     Estimated Investment Window
                   </div>
-                  <div className="text-3xl xs:text-4xl sm:text-5xl font-black text-[var(--text-main)] tracking-tight mb-2">
+                  <div className="text-3xl xs:text-4xl sm:text-5xl font-black text-[var(--text-main)] tracking-tight mb-2 group-hover:scale-[1.02] transition-transform duration-300">
                     ${estimatedMin.toLocaleString()} – ${estimatedMax.toLocaleString()}
                     <span className="text-xs font-normal text-[var(--text-muted)] font-sans ml-1 sm:ml-2">USD</span>
                   </div>
@@ -222,7 +223,7 @@ export const CostEstimator = ({ onBookEstimate }) => {
                       budget: `$${estimatedMin.toLocaleString()} - $${estimatedMax.toLocaleString()}`,
                       timeline: `${estimatedWeeks}-${estimatedWeeks + 2} Weeks`
                     })}
-                    className="w-full py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-[#E51A4B] to-[#D01540] text-white font-bold text-xs sm:text-base shadow-xl shadow-[#E51A4B]/30 hover:shadow-[#E51A4B]/50 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 group"
+                    className="w-full py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-[#E51A4B] to-[#D01540] text-white font-bold text-xs sm:text-base shadow-xl shadow-[#E51A4B]/30 hover:shadow-[#E51A4B]/50 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 group focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
                   >
                     <span>Book Free Consultation with This Scope</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform shrink-0" />

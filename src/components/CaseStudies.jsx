@@ -59,25 +59,32 @@ export const CaseStudies = ({ onOpenConsultation }) => {
               </h2>
             </div>
             
-            {/* Carousel Controls */}
+            {/* Carousel Controls with Enhanced Hover & Focus States */}
             <div className="flex items-center gap-2.5 mt-4 md:mt-0">
               <button
                 onClick={() => setIsAutoPlay(!isAutoPlay)}
-                className="p-2.5 rounded-full bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors"
-                title={isAutoPlay ? "Pause Auto-play" : "Start Auto-play"}
+                className={`p-2.5 rounded-full border transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none ${
+                  isAutoPlay
+                    ? 'bg-black/[0.04] dark:bg-white/[0.06] border-black/15 dark:border-white/15 text-[var(--text-main)] hover:border-[#E51A4B] hover:text-[#E51A4B]'
+                    : 'bg-[#E51A4B]/10 border-[#E51A4B]/30 text-[#E51A4B] hover:bg-[#E51A4B] hover:text-white'
+                }`}
+                title={isAutoPlay ? "Pause Auto-Rotation" : "Start Auto-Rotation"}
+                aria-label={isAutoPlay ? "Pause Carousel" : "Play Carousel"}
               >
                 {isAutoPlay ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
               </button>
               <button
                 onClick={handlePrev}
-                className="p-2.5 rounded-full bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[var(--text-main)] hover:bg-[#E51A4B] hover:text-white transition-all active:scale-95"
+                className="p-2.5 rounded-full bg-black/[0.04] dark:bg-white/[0.06] border border-black/15 dark:border-white/15 text-[var(--text-main)] hover:bg-[#E51A4B] hover:border-[#E51A4B] hover:text-white hover:scale-105 active:scale-95 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
+                title="Previous Case Study"
                 aria-label="Previous Case Study"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={handleNext}
-                className="p-2.5 rounded-full bg-black/[0.03] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[var(--text-main)] hover:bg-[#E51A4B] hover:text-white transition-all active:scale-95"
+                className="p-2.5 rounded-full bg-black/[0.04] dark:bg-white/[0.06] border border-black/15 dark:border-white/15 text-[var(--text-main)] hover:bg-[#E51A4B] hover:border-[#E51A4B] hover:text-white hover:scale-105 active:scale-95 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
+                title="Next Case Study"
                 aria-label="Next Case Study"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -91,7 +98,7 @@ export const CaseStudies = ({ onOpenConsultation }) => {
           <div 
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="glass-panel p-6 sm:p-10 rounded-3xl border border-black/10 dark:border-white/15 text-left relative overflow-hidden shadow-2xl mb-16"
+            className="glass-panel p-6 sm:p-10 rounded-3xl border border-black/10 dark:border-white/15 text-left relative overflow-hidden shadow-2xl mb-16 group/card"
           >
             {/* Top Auto Progress Bar */}
             <div className="absolute top-0 left-0 right-0 h-1 bg-black/10 dark:bg-white/10">
@@ -108,7 +115,7 @@ export const CaseStudies = ({ onOpenConsultation }) => {
               <div className="lg:col-span-7 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="text-[11px] font-bold tracking-widest uppercase text-[#E51A4B] bg-[#E51A4B]/10 px-3.5 py-1 rounded-full border border-[#E51A4B]/20">
+                    <span className="text-[11px] font-bold tracking-widest uppercase text-[#E51A4B] bg-[#E51A4B]/10 px-3.5 py-1 rounded-full border border-[#E51A4B]/20 transition-all hover:bg-[#E51A4B]/20">
                       {activeStudy.category}
                     </span>
                     <span className="text-xs text-[var(--text-muted)] font-mono">
@@ -116,7 +123,7 @@ export const CaseStudies = ({ onOpenConsultation }) => {
                     </span>
                   </div>
 
-                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[var(--text-main)] mb-3">
+                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[var(--text-main)] mb-3 group-hover/card:text-[#E51A4B] transition-colors duration-300">
                     {activeStudy.title}
                   </h3>
 
@@ -130,7 +137,10 @@ export const CaseStudies = ({ onOpenConsultation }) => {
 
                   <div className="flex flex-wrap gap-2 mb-8">
                     {activeStudy.tags.map((tag, i) => (
-                      <span key={i} className="text-xs font-mono px-3 py-1 rounded-lg bg-black/[0.03] dark:bg-white/[0.04] text-[var(--text-main)] border border-black/5 dark:border-white/5">
+                      <span 
+                        key={i} 
+                        className="text-xs font-mono px-3 py-1 rounded-lg bg-black/[0.03] dark:bg-white/[0.04] text-[var(--text-main)] border border-black/5 dark:border-white/5 hover:border-[#E51A4B]/40 hover:-translate-y-0.5 transition-all duration-200 cursor-default"
+                      >
                         {tag}
                       </span>
                     ))}
@@ -140,7 +150,7 @@ export const CaseStudies = ({ onOpenConsultation }) => {
                 <div className="flex items-center gap-4 pt-4 border-t border-black/10 dark:border-white/10">
                   <button
                     onClick={onOpenConsultation}
-                    className="px-6 py-3 rounded-full bg-[#E51A4B] hover:bg-[#D01540] text-white font-bold text-xs sm:text-sm transition-all shadow-lg shadow-[#E51A4B]/30 hover:scale-105 active:scale-95 flex items-center gap-2"
+                    className="px-6 py-3 rounded-full bg-[#E51A4B] hover:bg-[#D01540] text-white font-bold text-xs sm:text-sm transition-all duration-200 shadow-lg shadow-[#E51A4B]/30 hover:scale-105 hover:shadow-xl hover:shadow-[#E51A4B]/40 active:scale-95 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none flex items-center gap-2"
                   >
                     <span>Request Similar Case Study 🚀</span>
                     <ArrowRight className="w-4 h-4" />
@@ -150,7 +160,7 @@ export const CaseStudies = ({ onOpenConsultation }) => {
 
               {/* Right Column: High-Impact ROI Stat Box */}
               <div className="lg:col-span-5 flex flex-col justify-center">
-                <div className="p-8 sm:p-10 rounded-2xl bg-gradient-to-br from-black/[0.04] dark:from-white/[0.06] to-black/[0.01] dark:to-white/[0.01] border border-black/10 dark:border-white/10 text-center relative overflow-hidden group">
+                <div className="p-8 sm:p-10 rounded-2xl bg-gradient-to-br from-black/[0.04] dark:from-white/[0.06] to-black/[0.01] dark:to-white/[0.01] border border-black/10 dark:border-white/10 text-center relative overflow-hidden group hover:border-[#E51A4B]/30 transition-all duration-300">
                   <div className="text-5xl sm:text-6xl font-black text-[var(--text-main)] tracking-tight mb-2 group-hover:scale-105 transition-transform duration-300">
                     {activeStudy.metric}
                   </div>
@@ -171,9 +181,12 @@ export const CaseStudies = ({ onOpenConsultation }) => {
                 <button
                   key={i}
                   onClick={() => setCurrentSlide(i)}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    i === currentSlide ? 'w-8 bg-[#E51A4B]' : 'w-2 bg-black/20 dark:bg-white/20 hover:bg-black/40 dark:hover:bg-white/40'
+                  className={`h-2.5 rounded-full transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none ${
+                    i === currentSlide 
+                      ? 'w-8 bg-[#E51A4B] shadow-sm' 
+                      : 'w-2.5 bg-black/20 dark:bg-white/20 hover:bg-[#E51A4B]/60'
                   }`}
+                  title={`Go to slide ${i + 1}`}
                   aria-label={`Go to slide ${i + 1}`}
                 ></button>
               ))}
@@ -197,7 +210,7 @@ export const CaseStudies = ({ onOpenConsultation }) => {
               {[...TESTIMONIALS, ...TESTIMONIALS, ...TESTIMONIALS].map((t, i) => (
                 <div
                   key={i}
-                  className="glass-panel p-6 sm:p-7 rounded-2xl sm:rounded-3xl text-left border border-black/5 dark:border-white/[0.06] flex flex-col justify-between w-[320px] sm:w-[380px] shrink-0 shadow-lg whitespace-normal"
+                  className="glass-panel p-6 sm:p-7 rounded-2xl sm:rounded-3xl text-left border border-black/5 dark:border-white/[0.06] flex flex-col justify-between w-[320px] sm:w-[380px] shrink-0 shadow-lg whitespace-normal hover:border-[#E51A4B]/40 hover:-translate-y-1 transition-all duration-200 cursor-default"
                 >
                   <div>
                     <div className="flex items-center gap-1 text-amber-400 mb-3">

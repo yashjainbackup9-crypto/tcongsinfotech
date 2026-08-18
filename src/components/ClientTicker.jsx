@@ -19,7 +19,7 @@ export const ClientTicker = () => {
   ];
 
   return (
-    <div className="py-12 border-y border-black/5 dark:border-white/[0.06] bg-black/[0.02] dark:bg-[#0E0E14]/60 relative overflow-hidden">
+    <section id="clients" className="py-12 border-y border-black/5 dark:border-white/[0.06] bg-black/[0.02] dark:bg-[#0E0E14]/60 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
           <div>
@@ -32,9 +32,9 @@ export const ClientTicker = () => {
           </div>
           
           {/* Countries flags pill */}
-          <div className="flex items-center gap-3 bg-black/[0.03] dark:bg-white/[0.04] px-4 py-2 rounded-full border border-black/10 dark:border-white/5">
+          <div className="flex items-center gap-3 bg-black/[0.03] dark:bg-white/[0.04] px-4 py-2 rounded-full border border-black/10 dark:border-white/5 shadow-sm">
             {CLIENT_LOCATIONS.map((loc, i) => (
-              <span key={i} title={loc.country} className="text-base cursor-default hover:scale-125 transition-transform">
+              <span key={i} title={loc.country} className="text-base cursor-default hover:scale-125 transition-transform duration-200">
                 {loc.flag}
               </span>
             ))}
@@ -45,11 +45,11 @@ export const ClientTicker = () => {
 
       {/* Infinite scrolling ticker with real SVGs */}
       <div className="relative flex overflow-x-hidden group">
-        <div className="flex gap-6 py-2 animate-[scroll_30s_linear_infinite] whitespace-nowrap">
+        <div className="flex gap-6 py-2 animate-[scroll_30s_linear_infinite] group-hover:[animation-play-state:paused] whitespace-nowrap">
           {[...ecosystemItems, ...ecosystemItems].map((item, idx) => (
             <div
               key={idx}
-              className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/[0.06] text-[var(--text-main)] font-semibold text-xs sm:text-sm hover:border-[#E51A4B]/40 hover:scale-105 transition-all cursor-default shadow-sm"
+              className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/[0.06] text-[var(--text-main)] font-semibold text-xs sm:text-sm hover:border-[#E51A4B]/40 hover:-translate-y-0.5 hover:scale-105 transition-all duration-200 cursor-default shadow-sm"
             >
               <img 
                 src={item.icon} 
@@ -64,6 +64,6 @@ export const ClientTicker = () => {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };

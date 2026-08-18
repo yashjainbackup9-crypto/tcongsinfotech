@@ -12,6 +12,7 @@ import { FAQSection } from './components/FAQSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { ConsultationModal } from './components/ConsultationModal';
+import { SectionAutoScroller } from './components/SectionAutoScroller';
 import { MessageSquare, PhoneCall, ArrowUp } from 'lucide-react';
 
 export function MainLayout() {
@@ -59,19 +60,23 @@ export function MainLayout() {
         initialData={estimatorPrefill}
       />
 
-      {/* Floating Action Button (Quick Call / Chat) */}
+      {/* Bottom Floating Section Auto-Scroll Showcase Controller */}
+      <SectionAutoScroller />
+
+      {/* Floating Action Button (Quick Call / Scroll Top) */}
       <div className="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
         <button
           onClick={scrollToTop}
-          className="w-10 h-10 rounded-full bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/10 dark:hover:bg-white/20 text-[var(--text-main)] border border-black/10 dark:border-white/10 backdrop-blur-md flex items-center justify-center transition-all shadow-lg hidden sm:flex hover:scale-110 active:scale-95"
+          className="w-10 h-10 rounded-full bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/10 dark:hover:bg-white/20 text-[var(--text-main)] border border-black/10 dark:border-white/10 backdrop-blur-md flex items-center justify-center transition-all shadow-lg hidden sm:flex hover:scale-110 active:scale-95 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
           aria-label="Scroll to top"
+          title="Scroll to top"
         >
           <ArrowUp className="w-4 h-4" />
         </button>
 
         <button
           onClick={() => handleOpenConsultation()}
-          className="relative group p-3.5 sm:px-5 sm:py-3 rounded-full bg-gradient-to-r from-[#E51A4B] to-[#D01540] text-white font-bold text-xs shadow-2xl shadow-[#E51A4B]/40 hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
+          className="relative group p-3.5 sm:px-5 sm:py-3 rounded-full bg-gradient-to-r from-[#E51A4B] to-[#D01540] text-white font-bold text-xs shadow-2xl shadow-[#E51A4B]/40 hover:scale-105 active:scale-95 transition-all flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
         >
           <span className="w-2 h-2 rounded-full bg-white animate-ping"></span>
           <PhoneCall className="w-4 h-4" />

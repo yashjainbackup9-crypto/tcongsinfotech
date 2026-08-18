@@ -42,15 +42,16 @@ export const FAQSection = ({ onOpenConsultation }) => {
                 duration={500}
               >
                 <div
-                  className={`rounded-2xl transition-all border overflow-hidden ${
+                  className={`rounded-2xl transition-all duration-200 border overflow-hidden ${
                     isOpen 
                       ? 'bg-black/[0.03] dark:bg-white/[0.06] border-[#E51A4B]/50 shadow-lg shadow-[#E51A4B]/5' 
-                      : 'bg-black/[0.01] dark:bg-white/[0.02] border-black/5 dark:border-white/[0.06] hover:bg-black/[0.02] dark:hover:bg-white/[0.04]'
+                      : 'bg-black/[0.01] dark:bg-white/[0.02] border-black/5 dark:border-white/[0.06] hover:border-[#E51A4B]/30 hover:bg-black/[0.02] dark:hover:bg-white/[0.04]'
                   }`}
                 >
                   <button
                     onClick={() => toggleFAQ(idx)}
-                    className="w-full p-4 sm:p-6 text-left flex items-center justify-between gap-3 sm:gap-4 cursor-pointer"
+                    className="w-full p-4 sm:p-6 text-left flex items-center justify-between gap-3 sm:gap-4 cursor-pointer focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
+                    aria-expanded={isOpen}
                   >
                     <span className="text-sm sm:text-lg font-bold text-[var(--text-main)] leading-snug">
                       {faq.question}
@@ -75,7 +76,7 @@ export const FAQSection = ({ onOpenConsultation }) => {
 
         {/* Still have questions banner */}
         <ScrollReveal animation="fade-up" delay={200}>
-          <div className="mt-8 sm:mt-12 p-6 sm:p-8 rounded-2xl sm:rounded-3xl glass-panel border border-black/10 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 text-center sm:text-left">
+          <div className="mt-8 sm:mt-12 p-6 sm:p-8 rounded-2xl sm:rounded-3xl glass-panel border border-black/10 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 text-center sm:text-left hover:border-[#E51A4B]/30 transition-all duration-300">
             <div className="flex items-center gap-3.5 sm:gap-4">
               <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#E51A4B]/10 text-[#E51A4B] flex items-center justify-center shrink-0">
                 <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -88,7 +89,7 @@ export const FAQSection = ({ onOpenConsultation }) => {
 
             <button
               onClick={onOpenConsultation}
-              className="w-full sm:w-auto px-6 py-2.5 sm:py-3 rounded-full bg-[#E51A4B] text-white font-bold text-xs sm:text-sm hover:bg-[#D01540] transition-all shadow-lg hover:scale-105 whitespace-nowrap active:scale-95"
+              className="w-full sm:w-auto px-6 py-2.5 sm:py-3 rounded-full bg-[#E51A4B] text-white font-bold text-xs sm:text-sm hover:bg-[#D01540] transition-all shadow-lg hover:scale-105 whitespace-nowrap active:scale-95 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
             >
               Ask Us Anything
             </button>

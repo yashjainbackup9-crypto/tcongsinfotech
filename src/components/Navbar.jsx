@@ -59,12 +59,15 @@ export const Navbar = ({ onOpenConsultation }) => {
         <div className="flex items-center justify-between">
           
           {/* Brand Logo with Official Extracted SVG Asset */}
-          <a href="#" className="flex items-center gap-2.5 sm:gap-3 group">
+          <a 
+            href="#" 
+            className="flex items-center gap-2.5 sm:gap-3 group focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none rounded-lg p-1"
+          >
             <div className="h-9 sm:h-10 flex items-center">
               <img 
                 src="/assets/frontend-assets/images/svgs/logo.svg" 
                 alt="Tcongs Infotech Logo" 
-                className="h-8 sm:h-9 w-auto object-contain brightness-105 group-hover:scale-105 transition-transform"
+                className="h-8 sm:h-9 w-auto object-contain brightness-105 group-hover:scale-105 transition-transform duration-200"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
                   const fallback = e.currentTarget.nextElementSibling;
@@ -92,7 +95,7 @@ export const Navbar = ({ onOpenConsultation }) => {
               <a
                 key={link.name}
                 href={link.href}
-                className="px-3.5 py-1.5 text-xs xl:text-sm font-medium text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-black/[0.05] dark:hover:bg-white/[0.08] rounded-full transition-all duration-200"
+                className="px-3.5 py-1.5 text-xs xl:text-sm font-medium text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-black/[0.05] dark:hover:bg-white/[0.08] rounded-full transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
               >
                 {link.name}
               </a>
@@ -103,7 +106,7 @@ export const Navbar = ({ onOpenConsultation }) => {
           <div className="hidden lg:flex items-center gap-3">
             <button
               onClick={toggleTheme}
-              className="p-2.5 rounded-full bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[var(--text-muted)] hover:text-[var(--text-main)] hover:scale-110 active:scale-95 transition-all duration-200"
+              className="p-2.5 rounded-full bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[var(--text-muted)] hover:text-[var(--text-main)] hover:scale-110 active:scale-95 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
               aria-label="Toggle Theme"
               title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
             >
@@ -114,14 +117,14 @@ export const Navbar = ({ onOpenConsultation }) => {
               )}
             </button>
 
-            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-medium">
+            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-medium cursor-default">
               <span className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-ping"></span>
               <span>Available for Q3/Q4</span>
             </div>
 
             <button
               onClick={onOpenConsultation}
-              className="relative group overflow-hidden px-5 py-2.5 rounded-full bg-gradient-to-r from-[#E51A4B] to-[#D01540] text-white text-sm font-semibold shadow-lg shadow-[#E51A4B]/25 hover:shadow-[#E51A4B]/40 hover:scale-[1.03] active:scale-[0.97] transition-all duration-200 flex items-center gap-2"
+              className="relative group overflow-hidden px-5 py-2.5 rounded-full bg-gradient-to-r from-[#E51A4B] to-[#D01540] text-white text-sm font-semibold shadow-lg shadow-[#E51A4B]/25 hover:shadow-[#E51A4B]/40 hover:scale-[1.03] active:scale-[0.97] transition-all duration-200 flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
             >
               <span>Book Call</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
@@ -132,21 +135,21 @@ export const Navbar = ({ onOpenConsultation }) => {
           <div className="lg:hidden flex items-center gap-1.5 sm:gap-2">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-xl bg-black/[0.05] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[var(--text-main)] active:scale-90 transition-transform"
+              className="p-2 rounded-xl bg-black/[0.05] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[var(--text-main)] active:scale-90 transition-transform focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
               aria-label="Toggle Theme"
             >
               {theme === 'dark' ? <Sun className="w-4 h-4 text-[#E2EC07]" /> : <Moon className="w-4 h-4" />}
             </button>
             <button
               onClick={onOpenConsultation}
-              className="px-3 py-2 rounded-xl bg-[#E51A4B] text-white text-xs font-semibold flex items-center gap-1.5 shadow-md shadow-[#E51A4B]/30 active:scale-95 transition-transform"
+              className="px-3 py-2 rounded-xl bg-[#E51A4B] text-white text-xs font-semibold flex items-center gap-1.5 shadow-md shadow-[#E51A4B]/30 active:scale-95 transition-transform focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
             >
               <PhoneCall className="w-3.5 h-3.5" />
               <span className="hidden xs:inline text-[11px]">Book Call</span>
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl bg-black/[0.05] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[var(--text-main)] active:scale-90 transition-transform"
+              className="p-2 rounded-xl bg-black/[0.05] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[var(--text-main)] active:scale-90 transition-transform focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
               aria-label="Toggle Menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -173,7 +176,7 @@ export const Navbar = ({ onOpenConsultation }) => {
                 key={link.name}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between text-base font-semibold text-[var(--text-main)] hover:text-[#E51A4B] py-3 border-b border-black/5 dark:border-white/[0.05] active:bg-black/5 dark:active:bg-white/5 px-2 rounded-lg"
+                className="flex items-center justify-between text-base font-semibold text-[var(--text-main)] hover:text-[#E51A4B] py-3 border-b border-black/5 dark:border-white/[0.05] active:bg-black/5 dark:active:bg-white/5 px-2 rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-[#E51A4B]"
               >
                 <span>{link.name}</span>
                 <ChevronRight className="w-4 h-4 opacity-50" />
@@ -188,7 +191,7 @@ export const Navbar = ({ onOpenConsultation }) => {
                 setMobileMenuOpen(false);
                 onOpenConsultation();
               }}
-              className="w-full py-3.5 rounded-xl bg-[#E51A4B] text-white font-bold text-sm text-center shadow-lg shadow-[#E51A4B]/30 flex items-center justify-center gap-2 active:scale-98"
+              className="w-full py-3.5 rounded-xl bg-[#E51A4B] text-white font-bold text-sm text-center shadow-lg shadow-[#E51A4B]/30 flex items-center justify-center gap-2 active:scale-98 focus-visible:ring-2 focus-visible:ring-white"
             >
               <span>Schedule 30-Min Consultation 🚀</span>
               <ArrowRight className="w-4 h-4" />
