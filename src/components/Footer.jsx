@@ -13,6 +13,31 @@ export const Footer = ({ onOpenConsultation }) => {
     }
   };
 
+  const handleLinkClick = (e, href) => {
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const targetId = href.replace('#', '');
+      if (targetId === '' || targetId === 'hero') {
+        if (window.lenis) {
+          window.lenis.scrollTo(0, { duration: 1.2 });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      } else {
+        const el = document.getElementById(targetId);
+        if (el) {
+          if (window.lenis) {
+            window.lenis.scrollTo(el, { offset: -80, duration: 1.2 });
+          } else {
+            const navHeight = 80;
+            const targetY = el.getBoundingClientRect().top + window.pageYOffset - navHeight;
+            window.scrollTo({ top: targetY, behavior: 'smooth' });
+          }
+        }
+      }
+    }
+  };
+
   return (
     <footer className="bg-black/95 dark:bg-[#050507] border-t border-black/10 dark:border-white/[0.08] text-slate-400 text-xs pt-16 pb-12 relative overflow-hidden text-left">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -22,7 +47,7 @@ export const Footer = ({ onOpenConsultation }) => {
           {/* Col 1: Brand & Mission with Official SVG Logo */}
           <div className="lg:col-span-4 flex flex-col justify-between">
             <div>
-              <a href="#" className="flex items-center gap-3 mb-4 group">
+              <a href="#" onClick={(e) => handleLinkClick(e, '#')} className="flex items-center gap-3 mb-4 group">
                 <img 
                   src="/assets/frontend-assets/images/svgs/logo.svg" 
                   alt="Tcongs Infotech Logo" 
@@ -56,7 +81,7 @@ export const Footer = ({ onOpenConsultation }) => {
             <div className="mt-8">
               <button
                 onClick={onOpenConsultation}
-                className="px-5 py-2.5 rounded-full bg-white/[0.08] hover:bg-[#E51A4B] text-white font-semibold transition-all border border-white/10 hover:border-[#E51A4B] text-xs flex items-center gap-2 hover:scale-105"
+                className="px-5 py-2.5 rounded-full bg-white/[0.08] hover:bg-[#E51A4B] text-white font-semibold transition-all border border-white/10 hover:border-[#E51A4B] text-xs flex items-center gap-2 hover:scale-105 active:scale-95"
               >
                 <span>Schedule Free 30-Min Call 🚀</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -72,7 +97,11 @@ export const Footer = ({ onOpenConsultation }) => {
             <ul className="space-y-2.5">
               {SERVICES.map((s) => (
                 <li key={s.id}>
-                  <a href="#services" className="hover:text-[#E51A4B] transition-colors line-clamp-1">
+                  <a 
+                    href="#services" 
+                    onClick={(e) => handleLinkClick(e, '#services')}
+                    className="hover:text-[#E51A4B] transition-colors line-clamp-1"
+                  >
                     {s.title}
                   </a>
                 </li>
@@ -86,13 +115,13 @@ export const Footer = ({ onOpenConsultation }) => {
               Navigation
             </h4>
             <ul className="space-y-2.5">
-              <li><a href="#services" className="hover:text-white transition-colors">Services Directory</a></li>
-              <li><a href="#tech-stack" className="hover:text-white transition-colors">Tech Matrix</a></li>
-              <li><a href="#process" className="hover:text-white transition-colors">6-Step Framework</a></li>
-              <li><a href="#case-studies" className="hover:text-white transition-colors">Client Case Studies</a></li>
-              <li><a href="#estimator" className="hover:text-white transition-colors">Project Cost Estimator</a></li>
-              <li><a href="#faqs" className="hover:text-white transition-colors">FAQs</a></li>
-              <li><a href="#contact" className="hover:text-white transition-colors">Contact Technical Team</a></li>
+              <li><a href="#services" onClick={(e) => handleLinkClick(e, '#services')} className="hover:text-white transition-colors">Services Directory</a></li>
+              <li><a href="#tech-stack" onClick={(e) => handleLinkClick(e, '#tech-stack')} className="hover:text-white transition-colors">Tech Matrix</a></li>
+              <li><a href="#process" onClick={(e) => handleLinkClick(e, '#process')} className="hover:text-white transition-colors">6-Step Framework</a></li>
+              <li><a href="#case-studies" onClick={(e) => handleLinkClick(e, '#case-studies')} className="hover:text-white transition-colors">Client Case Studies</a></li>
+              <li><a href="#estimator" onClick={(e) => handleLinkClick(e, '#estimator')} className="hover:text-white transition-colors">Project Cost Estimator</a></li>
+              <li><a href="#faqs" onClick={(e) => handleLinkClick(e, '#faqs')} className="hover:text-white transition-colors">FAQs</a></li>
+              <li><a href="#contact" onClick={(e) => handleLinkClick(e, '#contact')} className="hover:text-white transition-colors">Contact Technical Team</a></li>
             </ul>
           </div>
 
@@ -125,7 +154,7 @@ export const Footer = ({ onOpenConsultation }) => {
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-2 rounded-xl bg-[#E51A4B] hover:bg-[#D01540] text-white font-semibold text-xs transition-colors hover:scale-[1.02]"
+                  className="w-full py-2 rounded-xl bg-[#E51A4B] hover:bg-[#D01540] text-white font-semibold text-xs transition-colors hover:scale-[1.02] active:scale-95"
                 >
                   Join Insights
                 </button>

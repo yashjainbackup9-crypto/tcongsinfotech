@@ -143,7 +143,20 @@ const marketplaceEngine = new OmniChannelBridge({
 
               <a
                 href="#services"
-                className="w-full sm:w-auto px-7 py-3.5 sm:px-8 sm:py-4 rounded-full bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 hover:bg-black/[0.06] dark:hover:bg-white/[0.08] text-[var(--text-main)] font-semibold text-sm sm:text-base transition-all duration-200 text-center flex items-center justify-center gap-2"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const el = document.getElementById('services');
+                  if (el) {
+                    if (window.lenis) {
+                      window.lenis.scrollTo(el, { offset: -80, duration: 1.2 });
+                    } else {
+                      const navHeight = 80;
+                      const targetY = el.getBoundingClientRect().top + window.pageYOffset - navHeight;
+                      window.scrollTo({ top: targetY, behavior: 'smooth' });
+                    }
+                  }
+                }}
+                className="w-full sm:w-auto px-7 py-3.5 sm:px-8 sm:py-4 rounded-full bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 hover:bg-black/[0.06] dark:hover:bg-white/[0.08] text-[var(--text-main)] font-semibold text-sm sm:text-base transition-all duration-200 text-center flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
               >
                 <span>Explore Solutions</span>
                 <Zap className="w-4 h-4 text-[#E51A4B] dark:text-[#E2EC07]" />

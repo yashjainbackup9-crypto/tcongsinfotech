@@ -21,13 +21,21 @@ export const SectionAutoScroller = () => {
     if (!section) return;
 
     if (section.id === 'hero') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (window.lenis) {
+        window.lenis.scrollTo(0, { duration: 1.2 });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     } else {
       const el = document.getElementById(section.id);
       if (el) {
-        const navHeight = 80;
-        const targetY = el.getBoundingClientRect().top + window.pageYOffset - navHeight;
-        window.scrollTo({ top: targetY, behavior: 'smooth' });
+        if (window.lenis) {
+          window.lenis.scrollTo(el, { offset: -80, duration: 1.2 });
+        } else {
+          const navHeight = 80;
+          const targetY = el.getBoundingClientRect().top + window.pageYOffset - navHeight;
+          window.scrollTo({ top: targetY, behavior: 'smooth' });
+        }
       }
     }
     setCurrentSectionIndex(index);

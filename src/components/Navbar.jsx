@@ -47,6 +47,31 @@ export const Navbar = ({ onOpenConsultation }) => {
     { name: "Contact", href: "#contact" },
   ];
 
+  const handleNavClick = (e, href) => {
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const targetId = href.replace('#', '');
+      const element = document.getElementById(targetId);
+      if (element) {
+        if (window.lenis) {
+          window.lenis.scrollTo(element, { offset: -80, duration: 1.2 });
+        } else {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+      setMobileMenuOpen(false);
+    }
+  };
+
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    if (window.lenis) {
+      window.lenis.scrollTo(0, { duration: 1.2 });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -61,6 +86,7 @@ export const Navbar = ({ onOpenConsultation }) => {
           {/* Brand Logo with Official Extracted SVG Asset */}
           <a 
             href="#" 
+            onClick={handleLogoClick}
             className="flex items-center gap-2.5 sm:gap-3 group focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none rounded-lg p-1"
           >
             <div className="h-9 sm:h-10 flex items-center">
@@ -95,6 +121,7 @@ export const Navbar = ({ onOpenConsultation }) => {
               <a
                 key={link.name}
                 href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
                 className="px-3.5 py-1.5 text-xs xl:text-sm font-medium text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-black/[0.05] dark:hover:bg-white/[0.08] rounded-full transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
               >
                 {link.name}
@@ -175,7 +202,7 @@ export const Navbar = ({ onOpenConsultation }) => {
               <a
                 key={link.name}
                 href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => handleNavClick(e, link.href)}
                 className="flex items-center justify-between text-base font-semibold text-[var(--text-main)] hover:text-[#E51A4B] py-3 border-b border-black/5 dark:border-white/[0.05] active:bg-black/5 dark:active:bg-white/5 px-2 rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-[#E51A4B]"
               >
                 <span>{link.name}</span>

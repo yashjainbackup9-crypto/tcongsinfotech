@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Lenis from 'lenis';
 import { ThemeProvider } from './context/ThemeContext';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -20,13 +21,45 @@ export function MainLayout() {
   const [consultationModalOpen, setConsultationModalOpen] = useState(false);
   const [estimatorPrefill, setEstimatorPrefill] = useState(null);
 
+  // Initialize Lenis Smooth Inertia Scrolling throughout the entire page
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.8,
+    });
+
+    window.lenis = lenis;
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    const animFrame = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(animFrame);
+      lenis.destroy();
+      window.lenis = null;
+    };
+  }, []);
+
   const handleOpenConsultation = (data = null) => {
     setEstimatorPrefill(data);
     setConsultationModalOpen(true);
   };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (window.lenis) {
+      window.lenis.scrollTo(0, { duration: 1.2 });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   return (
@@ -61,7 +94,7 @@ export function MainLayout() {
         initialData={estimatorPrefill}
       />
 
-      {/* Interactive Theme Showcase Popup (Auto-toggles Light -> Dark -> Light + Manual Switch) */}
+      {/* Interactive Theme Showcase Popup */}
       <ThemeShowcaseModal />
 
       {/* Bottom Floating Section Auto-Scroll Showcase Controller */}
