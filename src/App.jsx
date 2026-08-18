@@ -13,6 +13,7 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { ConsultationModal } from './components/ConsultationModal';
 import { SectionAutoScroller } from './components/SectionAutoScroller';
+import { ThemeShowcaseModal } from './components/ThemeShowcaseModal';
 import { MessageSquare, PhoneCall, ArrowUp } from 'lucide-react';
 
 export function MainLayout() {
@@ -59,6 +60,9 @@ export function MainLayout() {
         }}
         initialData={estimatorPrefill}
       />
+
+      {/* Interactive Theme Showcase Popup (Auto-toggles Light -> Dark -> Light + Manual Switch) */}
+      <ThemeShowcaseModal />
 
       {/* Bottom Floating Section Auto-Scroll Showcase Controller */}
       <SectionAutoScroller />
