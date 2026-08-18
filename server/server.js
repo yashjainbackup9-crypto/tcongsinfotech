@@ -12,31 +12,41 @@ const PORT = process.env.PORT || 9002;
 app.use(cors());
 app.use(express.json());
 
-// Configure Nodemailer Transporter with Webverse Credentials
+// Configure Nodemailer Transporter strictly with environment variables (No hardcoded credentials)
+const senderEmail = process.env.BASE_SYSTEM_NODEMAILER_EMAIL_ADDRESS;
+const senderPassword = process.env.BASE_SYSTEM_NODEMAILER_EMAIL_PASSWORD;
+const smtpHost = process.env.SMTP_HOST || 'smtp.gmail.com';
+const smtpPort = parseInt(process.env.SMTP_PORT || '465');
+const adminRecipient = process.env.NOTIFICATION_RECIPIENT || senderEmail;
+
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'smtp.gmail.com',
-  port: parseInt(process.env.SMTP_PORT || '465'),
-  secure: process.env.SMTP_SECURE === 'true' || true,
+  host: smtpHost,
+  port: smtpPort,
+  secure: process.env.SMTP_SECURE === 'true' || smtpPort === 465,
   auth: {
-    user: process.env.BASE_SYSTEM_NODEMAILER_EMAIL_ADDRESS || 'info@thewebvale.com',
-    pass: process.env.BASE_SYSTEM_NODEMAILER_EMAIL_PASSWORD || 'Global5972@',
+    user: senderEmail,
+    pass: senderPassword,
   },
 });
 
 // Verify SMTP Connection on Startup
-transporter.verify((error, success) => {
-  if (error) {
-    console.warn('⚠️ SMTP Transporter Connection Warning:', error.message);
-  } else {
-    console.log('✅ Webverse Nodemailer Transporter Ready & Connected!');
-  }
-});
+if (senderEmail && senderPassword) {
+  transporter.verify((error, success) => {
+    if (error) {
+      console.warn('⚠️ SMTP Transporter Connection Warning:', error.message);
+    } else {
+      console.log('✅ Nodemailer Transporter Ready & Authenticated via Environment Variables!');
+    }
+  });
+} else {
+  console.warn('⚠️ SMTP Credentials missing in environment variables. Please check your .env configuration.');
+}
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
-    emailConfigured: !!process.env.BASE_SYSTEM_NODEMAILER_EMAIL_ADDRESS,
+    emailConfigured: !!(senderEmail && senderPassword),
     timestamp: new Date().toISOString()
   });
 });
@@ -49,8 +59,11 @@ app.post('/api/send-email', async (req, res) => {
     return res.status(400).json({ error: 'Name and Email are required fields.' });
   }
 
-  const senderEmail = process.env.BASE_SYSTEM_NODEMAILER_EMAIL_ADDRESS || 'info@thewebvale.com';
-  const adminRecipient = process.env.NOTIFICATION_RECIPIENT || 'info@thewebvale.com';
+  if (!senderEmail || !senderPassword) {
+    return res.status(500).json({ 
+      error: 'SMTP email credentials not configured in environment variables.' 
+    });
+  }
 
   try {
     // 1. Send Branded Client Confirmation Email
