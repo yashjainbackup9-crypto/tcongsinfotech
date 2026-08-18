@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { INSIGHTS_DETAILED } from '../data/content';
 import { ScrollReveal } from '../components/ScrollReveal';
+import { MarkdownRenderer } from '../components/MarkdownRenderer';
 
 export const InsightDetailPage = ({ onOpenConsultation }) => {
   const { slug } = useParams();
@@ -86,10 +87,8 @@ export const InsightDetailPage = ({ onOpenConsultation }) => {
 
         {/* Article Body Content */}
         <div className="glass-panel p-6 sm:p-10 rounded-3xl border border-black/10 dark:border-white/10 mb-16 text-xs sm:text-sm text-[var(--text-main)] leading-relaxed space-y-6">
-          <div className="prose dark:prose-invert max-w-none">
-            <div className="whitespace-pre-line font-sans">
-              {article.content}
-            </div>
+          <div className="max-w-none">
+            <MarkdownRenderer content={article.content} />
           </div>
 
           <div className="pt-8 mt-8 border-t border-black/10 dark:border-white/10 flex flex-wrap items-center justify-between gap-4">

@@ -528,9 +528,9 @@ export default async function handler(request) {
 
 ### The 3 Core Wins of Edge Architecture
 
-1. **Sub-400ms First Contentful Paint (FCP)**: By eliminating server roundtrips and rendering HTML right at the user's nearest CDN node, bounce rates drop by over 60%.
-2. **Zero Maintenance Vulnerabilities**: No vulnerable database connections exposed to the public internet. Static assets and microservices communicate via encrypted, rate-limited API gateways.
-3. **Infinite Scalability**: Whether 50 or 50,000 users visit simultaneously during a product launch, serverless Edge compute scales instantaneously with zero downtime.
+- **Sub-400ms First Contentful Paint (FCP)**: By eliminating server roundtrips and rendering HTML right at the user's nearest CDN node, bounce rates drop by over 60%.
+- **Zero Maintenance Vulnerabilities**: No vulnerable database connections exposed to the public internet. Static assets and microservices communicate via encrypted, rate-limited API gateways.
+- **Infinite Scalability**: Whether 50 or 50,000 users visit simultaneously during a product launch, serverless Edge compute scales instantaneously with zero downtime.
     `
   },
   {
@@ -571,9 +571,216 @@ async function ProjectMetrics({ projectId }) {
 \`\`\`
 
 ### Key Business Advantages:
-- **Zero Client Bundle Weight**: Heavy libraries stay on the server.
-- **Form Actions Without Boilerplate**: Native form state handling without endless \`useState\` handlers.
-- **Better SEO Indexing**: Web crawlers and AI search engines receive 100% pre-rendered semantic HTML.
+
+- **Zero Client Bundle Weight**: Heavy libraries stay on the server, resulting in near-instant First Input Delay.
+- **Form Actions Without Boilerplate**: Native form state handling without endless \`useState\` handlers or complex reducer wrappers.
+- **Better SEO & AI Indexing**: Web crawlers and AI search engines receive 100% pre-rendered semantic HTML.
+- **Automatic Asset Preloading**: Fonts, stylesheets, and scripts are discovered and preloaded in parallel before component execution.
+    `
+  },
+  {
+    slug: "geo-ai-search-optimization",
+    title: "Generative Engine Optimization (GEO): Ranking in ChatGPT, Perplexity & Claude Search in 2026",
+    subtitle: "How to structure Next.js 15 apps and JSON-LD entity graphs so LLM agents cite your business first.",
+    category: "AI & Search Intelligence",
+    readTime: "6 min read",
+    date: "August 16, 2026",
+    author: {
+      name: "Yash Jain",
+      role: "Lead Systems Architect",
+      avatar: "/assets/frontend-assets/images/favicon.png"
+    },
+    excerpt: "Traditional Google SEO is no longer enough. Over 40% of B2B buyer queries now originate inside ChatGPT, Perplexity, and Claude. Here is our exact GEO engineering framework.",
+    tags: ["GEO", "AI Search", "Perplexity", "Next.js 15", "JSON-LD"],
+    content: `
+### The Death of Traditional Blue-Link SEO
+
+Users are migrating from keyword search bars to conversational AI answers. When an executive asks ChatGPT *"Which agency in Mumbai builds high-concurrency React 19 fintech apps?"*, the AI does not return ten blue links—it reads structured entity graphs and quotes authoritative sources directly.
+
+To capture this traffic, we developed our proprietary **Generative Engine Optimization (GEO)** pipeline.
+
+\`\`\`json
+// Semantic JSON-LD Entity Schema for AI Search Bots
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Tcongs Infotech",
+  "founder": {
+    "@type": "Person",
+    "name": "Yash Jain",
+    "jobTitle": "Lead Systems Architect"
+  },
+  "knowsAbout": [
+    "React 19 Server Components",
+    "Next.js 15 Edge Architecture",
+    "Flutter Cross-Platform Engineering",
+    "Shopify Plus Headless Marketplaces"
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "180"
+  }
+}
+\`\`\`
+
+### The 4 GEO Engineering Pillars:
+
+1. **Structured Entity Schemas**: Inject rich semantic JSON-LD schemas on every route so web scrapers parse exact capabilities without hallucinating.
+2. **Sub-400ms Edge TTFB**: AI crawler bots have strict timeout windows. Delivering clean HTML in <400ms ensures 100% crawl completion.
+3. **Information Density & Citations**: Direct data tables, benchmark percentages, and code snippets provide high-entropy citation triggers that LLM summarizers favor.
+4. **Author Authority Signals**: Verifiable founder credentials, linked GitHub repos, and verified client case studies establish definitive domain consensus.
+    `
+  },
+  {
+    slug: "rag-agentic-pipeline-playbook",
+    title: "Building Zero-Hallucination Enterprise RAG with Pinecone, Claude 3.7 & Hybrid Search",
+    subtitle: "The complete technical blueprint for sub-350ms semantic search over internal company SOPs and PDFs.",
+    category: "Enterprise AI",
+    readTime: "8 min read",
+    date: "August 12, 2026",
+    author: {
+      name: "Tcongs AI Squad",
+      role: "AI Research Division",
+      avatar: "/assets/frontend-assets/images/favicon.png"
+    },
+    excerpt: "Enterprise document bots fail when they hallucinate. Here is how we engineered hybrid dense vector + sparse BM25 retrieval for 98.4% accuracy across 50,000+ corporate documents.",
+    tags: ["Claude 3.7", "RAG", "Pinecone", "Python", "FastAPI", "Vector DB"],
+    content: `
+### Why Standard Vector Search Fails in Production
+
+Naive vector search matches embeddings by cosine similarity. However, for technical queries involving exact product SKUs, error codes, or policy numbers, pure semantic search frequently misses exact keyword matches.
+
+Our solution is **Hybrid Reciprocal Rank Fusion (RRF)** combining Pinecone dense vectors with BM25 sparse keyword indices:
+
+\`\`\`python
+# Hybrid Search Fusion Algorithm
+from pinecone import Pinecone
+from rank_bm25 import BM25Okapi
+
+async def query_hybrid_rag(user_query: str, top_k: int = 5):
+    # 1. Generate dense embeddings via OpenAI text-embedding-3-large
+    dense_vector = await get_embedding(user_query)
+    
+    # 2. Query Pinecone with hybrid alpha weighting (0.7 dense / 0.3 sparse)
+    results = index.query(
+        vector=dense_vector,
+        sparse_vector=compute_sparse_vector(user_query),
+        top_k=top_k,
+        include_metadata=True
+    )
+    
+    # 3. Apply strict prompt guardrail before Claude synthesis
+    context_chunks = "\\n".join([doc.metadata['text'] for doc in results.matches])
+    return await synthesize_with_claude(user_query, context_chunks)
+\`\`\`
+
+### Architectural Milestones Achieved:
+
+- **98.4% Accuracy Benchmark**: Zero hallucinations on contractual and compliance queries.
+- **Sub-350ms Query Latency**: Cached embeddings in Redis for recurring enterprise questions.
+- **Strict Privacy Compliance**: Zero retention on external LLM APIs; sensitive data is sanitized before dispatch.
+- **Automated Tool Calling**: The agent directly triggers CRM actions, books meetings, and generates PDF reports.
+    `
+  },
+  {
+    slug: "cross-platform-60fps-flutter-sqlite",
+    title: "Architecting 60 FPS Offline-First Mobile Apps with Flutter 3 & SQLite Encrypted Storage",
+    subtitle: "Eliminating gesture lag, dropped frames, and network jitter in mission-critical mobile platforms.",
+    category: "Mobile Systems",
+    readTime: "7 min read",
+    date: "August 08, 2026",
+    author: {
+      name: "Aman Sharma",
+      role: "Head of Mobile",
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"
+    },
+    excerpt: "Building mobile healthcare apps requires flawless offline reliability and zero animation jank. Here is our Riverpod + SQLite encryption blueprint.",
+    tags: ["Flutter 3", "SQLite", "Offline-First", "WebRTC", "Mobile"],
+    content: `
+### The Offline-First Requirement
+
+In hospital wards or transit tunnels, network connections drop constantly. A telemedicine or field operations app must never show a spinning loader or lose user input during connectivity disruptions.
+
+We engineer mobile apps using a deterministic **Offline-First Local SQLite Engine** that syncs background deltas the moment connectivity restores:
+
+\`\`\`dart
+// Flutter Offline Sync Repository Pattern
+class PatientRecordRepository {
+  final LocalDatabase _localDb;
+  final SyncQueueEngine _syncQueue;
+
+  Future<void> saveRecordLocally(PatientRecord record) async {
+    // 1. Write immediately to encrypted SQLite database (<5ms)
+    await _localDb.insertRecord(record);
+    
+    // 2. Queue background delta for synchronization
+    await _syncQueue.enqueue(ActionType.upsert, record.toJson());
+    
+    // 3. Trigger optimistic UI update immediately at 60 FPS
+    state = AsyncData(record);
+  }
+}
+\`\`\`
+
+### Core Engineering Advantages:
+
+- **60 FPS Physics**: Custom render objects and Riverpod state controllers eliminate unnecessary widget rebuilds.
+- **Zero Data Loss**: All form inputs, audio notes, and prescription drafts are written to local SQLite storage instantly.
+- **Adaptive Bitrate WebRTC**: Telemedicine video streams automatically scale down resolution in low-bandwidth rural networks without dropping calls.
+- **Biometric Enclave Security**: FaceID / TouchID keys authenticate against hardware secure enclaves.
+    `
+  },
+  {
+    slug: "zero-downtime-kubernetes-cicd",
+    title: "Zero-Downtime Blue-Green Cloud Deployments on AWS EKS with Terraform & GitHub Actions",
+    subtitle: "How our infrastructure team deploys 15+ daily production releases with automated instant rollbacks.",
+    category: "Cloud & DevOps",
+    readTime: "6 min read",
+    date: "July 28, 2026",
+    author: {
+      name: "Rohan Kulkarni",
+      role: "Cloud DevOps Lead",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
+    },
+    excerpt: "Friday afternoon deployments shouldn't induce panic. Here is the blue-green Kubernetes pipeline we use to maintain 99.999% uptime across global client clusters.",
+    tags: ["AWS EKS", "Kubernetes", "Terraform", "CI/CD", "DevOps"],
+    content: `
+### The Anti-Downtime Philosophy
+
+When scaling applications that process tens of thousands of active websocket connections, restarting backend pods abruptly causes dropped requests and user disruption.
+
+We deploy infrastructure using **Terraform Infrastructure-as-Code** and **ArgoCD Canary Rollouts**:
+
+\`\`\`yaml
+# Kubernetes Canary Deployment Specification
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: api-microservice
+spec:
+  replicas: 10
+  strategy:
+    canary:
+      steps:
+      - setWeight: 10
+      - pause: { duration: 2m }
+      - setWeight: 50
+      - pause: { duration: 5m }
+      analysis:
+        templates:
+        - templateName: success-rate
+        args:
+        - name: service-name
+          value: api-microservice
+\`\`\`
+
+### Key Production Results:
+
+- **Zero-Downtime Deployments**: Active users experience zero latency spikes or disconnected websockets during new feature rollouts.
+- **Automated Instant Rollbacks**: If error rates exceed 0.05% in the first 2 minutes of canary traffic, the previous stable version is restored in <10 seconds.
+- **35% Cloud Cost Reduction**: Horizontal Pod Autoscaling (HPA) and AWS Spot instances dynamically downscale compute during low-traffic overnight hours.
+- **24/7 Telemetry**: Prometheus and Grafana dashboards alert on P99 latency anomalies before users notice.
     `
   },
   {
@@ -613,9 +820,10 @@ async function handleCheckoutOrder(order) {
 \`\`\`
 
 ### The Result:
-- 100% inventory accuracy with zero overselling.
-- 1.1s total checkout completion time.
-- +310% gross merchandise value surge processed without a single server reset.
+
+- **100% Inventory Accuracy**: Zero overselling across simultaneous channels (Shopify Plus, Amazon, Flipkart).
+- **1.1s Mobile Checkout**: Instant payment gateway routing with pre-warmed edge microservices.
+- **+310% Gross Merchandise Value Surge**: Processed without a single server reset or manual intervention.
     `
   }
 ];
