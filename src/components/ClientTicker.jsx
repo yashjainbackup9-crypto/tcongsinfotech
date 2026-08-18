@@ -43,9 +43,9 @@ export const ClientTicker = () => {
         </div>
       </div>
 
-      {/* Infinite scrolling ticker with real SVGs */}
-      <div className="relative flex overflow-x-hidden group">
-        <div className="flex gap-6 py-2 animate-[scroll_30s_linear_infinite] group-hover:[animation-play-state:paused] whitespace-nowrap">
+      {/* Infinite scrolling ticker with real SVGs - Slows on hover */}
+      <div className="relative flex overflow-x-hidden group marquee-container">
+        <div className="flex gap-6 py-2 animate-scroll-ticker whitespace-nowrap">
           {[...ecosystemItems, ...ecosystemItems].map((item, idx) => (
             <div
               key={idx}

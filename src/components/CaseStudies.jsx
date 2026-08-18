@@ -233,9 +233,9 @@ export const CaseStudies = ({ onOpenConsultation }) => {
             </div>
           </ScrollReveal>
 
-          {/* Continuous Auto-Scroll Carousel Container */}
-          <div className="relative flex overflow-x-hidden group py-2">
-            <div className="flex gap-6 animate-[scroll_35s_linear_infinite] group-hover:[animation-play-state:paused] whitespace-nowrap">
+          {/* Continuous Auto-Scroll Carousel Container (Slows down on hover) */}
+          <div className="relative flex overflow-x-hidden group py-2 marquee-container">
+            <div className="flex gap-6 animate-scroll-testimonials whitespace-nowrap">
               {[...TESTIMONIALS, ...TESTIMONIALS, ...TESTIMONIALS].map((t, i) => (
                 <div
                   key={i}

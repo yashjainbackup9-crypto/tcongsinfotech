@@ -35,7 +35,7 @@ export const TechMatrix = () => {
           <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/[0.04] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-[var(--text-muted)] text-[11px] sm:text-xs font-semibold uppercase tracking-wider mb-3 sm:mb-4">
               <Terminal className="w-3.5 h-3.5 text-[#E51A4B] dark:text-[#E2EC07]" />
-              <span>Continuous Auto-Scrolling Tech Engine</span>
+              <span>Continuous Auto-Scrolling Tech Engine (Slows on Hover)</span>
             </div>
             <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[var(--text-main)] tracking-tight">
               Engineered with <span className="accent-gradient-text">World-Class Tech.</span>
@@ -58,7 +58,7 @@ export const TechMatrix = () => {
                     setSelectedCategory(cat);
                     setSearchQuery("");
                   }}
-                  className={`flex items-center gap-1.5 sm:gap-2 px-4 py-2 rounded-full text-xs font-semibold transition-all whitespace-nowrap shrink-0 ${
+                  className={`flex items-center gap-1.5 sm:gap-2 px-4 py-2 rounded-full text-xs font-semibold transition-all whitespace-nowrap shrink-0 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none ${
                     selectedCategory === cat
                       ? 'bg-[#E51A4B] text-white shadow-lg shadow-[#E51A4B]/20 font-bold scale-105'
                       : 'bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 text-[var(--text-muted)] hover:bg-black/[0.06] dark:hover:bg-white/[0.08] hover:text-[var(--text-main)]'
@@ -77,7 +77,7 @@ export const TechMatrix = () => {
                 placeholder="Search any technology..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 sm:py-2.5 rounded-full bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-xs text-[var(--text-main)] placeholder-[var(--text-subtle)] focus:outline-none focus:border-[#E51A4B] transition-colors"
+                className="w-full pl-10 pr-4 py-2 sm:py-2.5 rounded-full bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-xs text-[var(--text-main)] placeholder-[var(--text-subtle)] focus:outline-none focus:border-[#E51A4B] transition-colors focus-visible:ring-2 focus-visible:ring-[#E51A4B]"
               />
             </div>
 
@@ -86,17 +86,17 @@ export const TechMatrix = () => {
 
       </div>
 
-      {/* CONTINUOUS AUTO-SCROLLING CAROUSELS */}
+      {/* CONTINUOUS AUTO-SCROLLING CAROUSELS (SLOWS DOWN ON HOVER) */}
       {selectedCategory === "ALL" && !searchQuery ? (
-        <div className="space-y-4 py-2 relative">
+        <div className="space-y-4 py-2 relative marquee-group">
           
           {/* Row 1: Auto-scrolling Leftwards */}
           <div className="relative flex overflow-x-hidden group py-1">
-            <div className="animate-scroll-left group-hover:[animation-play-state:paused] gap-4">
+            <div className="animate-scroll-left gap-4">
               {[...row1Items, ...row1Items, ...row1Items].map((tech, idx) => (
                 <div
                   key={idx}
-                  className="glass-panel p-4 sm:p-5 rounded-2xl text-left border border-black/5 dark:border-white/[0.06] flex items-center justify-between gap-4 w-[220px] sm:w-[260px] shrink-0 hover:border-[#E51A4B]/40 hover:scale-105 transition-all shadow-md cursor-default"
+                  className="glass-panel p-4 sm:p-5 rounded-2xl text-left border border-black/5 dark:border-white/[0.06] flex items-center justify-between gap-4 w-[220px] sm:w-[260px] shrink-0 hover:border-[#E51A4B]/40 hover:-translate-y-1 hover:scale-105 transition-all duration-200 shadow-md cursor-default"
                 >
                   <div>
                     <div className="font-bold text-[var(--text-main)] text-sm sm:text-base line-clamp-1">
@@ -117,11 +117,11 @@ export const TechMatrix = () => {
 
           {/* Row 2: Auto-scrolling Rightwards */}
           <div className="relative flex overflow-x-hidden group py-1">
-            <div className="animate-scroll-right group-hover:[animation-play-state:paused] gap-4">
+            <div className="animate-scroll-right gap-4">
               {[...row2Items, ...row2Items, ...row2Items].map((tech, idx) => (
                 <div
                   key={idx}
-                  className="glass-panel p-4 sm:p-5 rounded-2xl text-left border border-black/5 dark:border-white/[0.06] flex items-center justify-between gap-4 w-[220px] sm:w-[260px] shrink-0 hover:border-[#E2EC07]/40 hover:scale-105 transition-all shadow-md cursor-default"
+                  className="glass-panel p-4 sm:p-5 rounded-2xl text-left border border-black/5 dark:border-white/[0.06] flex items-center justify-between gap-4 w-[220px] sm:w-[260px] shrink-0 hover:border-[#E2EC07]/40 hover:-translate-y-1 hover:scale-105 transition-all duration-200 shadow-md cursor-default"
                 >
                   <div>
                     <div className="font-bold text-[var(--text-main)] text-sm sm:text-base line-clamp-1">
@@ -148,7 +148,7 @@ export const TechMatrix = () => {
             {filteredItems.map((tech, idx) => (
               <div
                 key={idx}
-                className="glass-panel glass-panel-hover p-4 sm:p-5 rounded-2xl text-left border border-black/5 dark:border-white/[0.06] flex items-center justify-between group"
+                className="glass-panel glass-panel-hover p-4 sm:p-5 rounded-2xl text-left border border-black/5 dark:border-white/[0.06] flex items-center justify-between group cursor-default"
               >
                 <div>
                   <div className="font-bold text-[var(--text-main)] text-xs sm:text-base group-hover:text-[#E51A4B] transition-colors line-clamp-1">

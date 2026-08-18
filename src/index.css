@@ -83,7 +83,7 @@
 }
 
 .glass-panel-hover {
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-panel-hover:hover {
@@ -196,16 +196,61 @@
   animation: pulseGlow 8s ease-in-out infinite;
 }
 
+/* Marquee Scroll Rules with Smooth Slow-Down on Hover */
+.marquee-container {
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  user-select: none;
+}
+
 .animate-scroll-left {
   display: flex;
   width: max-content;
-  animation: scrollContinuous 35s linear infinite;
+  animation: scrollContinuous 30s linear infinite;
+  transition: animation-duration 0.6s ease;
 }
 
 .animate-scroll-right {
   display: flex;
   width: max-content;
-  animation: scrollContinuousReverse 35s linear infinite;
+  animation: scrollContinuousReverse 30s linear infinite;
+  transition: animation-duration 0.6s ease;
+}
+
+.animate-scroll-testimonials {
+  display: flex;
+  width: max-content;
+  animation: scrollContinuous 35s linear infinite;
+  transition: animation-duration 0.6s ease;
+}
+
+.animate-scroll-ticker {
+  display: flex;
+  width: max-content;
+  animation: scrollContinuous 28s linear infinite;
+  transition: animation-duration 0.6s ease;
+}
+
+/* Gracefully Slow Down on Hover (decelerates to 3.5x slower speed for comfortable reading) */
+.marquee-container:hover .animate-scroll-left,
+.group:hover .animate-scroll-left {
+  animation-duration: 95s;
+}
+
+.marquee-container:hover .animate-scroll-right,
+.group:hover .animate-scroll-right {
+  animation-duration: 95s;
+}
+
+.marquee-container:hover .animate-scroll-testimonials,
+.group:hover .animate-scroll-testimonials {
+  animation-duration: 110s;
+}
+
+.marquee-container:hover .animate-scroll-ticker,
+.group:hover .animate-scroll-ticker {
+  animation-duration: 90s;
 }
 
 .shimmer-text {
