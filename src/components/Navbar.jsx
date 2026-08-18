@@ -8,9 +8,11 @@ import {
   PhoneCall,
   Sun,
   Moon,
-  Mail
+  Mail,
+  Search
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { CommandPalette } from './CommandPalette';
 
 export const Navbar = ({ onOpenConsultation }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -40,10 +42,10 @@ export const Navbar = ({ onOpenConsultation }) => {
   const navLinks = [
     { name: "Services", href: "#services" },
     { name: "Tech Stack", href: "#tech-stack" },
+    { name: "Benchmark", href: "#benchmark" },
     { name: "Process", href: "#process" },
     { name: "Case Studies", href: "#case-studies" },
-    { name: "Cost Estimator", href: "#estimator" },
-    { name: "FAQs", href: "#faqs" },
+    { name: "Estimator", href: "#estimator" },
     { name: "Contact", href: "#contact" },
   ];
 
@@ -117,7 +119,7 @@ export const Navbar = ({ onOpenConsultation }) => {
 
           {/* Desktop Navigation Links */}
           <nav className="hidden lg:flex items-center gap-1 bg-black/[0.03] dark:bg-white/[0.03] p-1.5 rounded-full border border-black/5 dark:border-white/[0.08] backdrop-blur-md">
-            {navLinks.slice(0, 6).map((link) => (
+            {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
@@ -129,8 +131,11 @@ export const Navbar = ({ onOpenConsultation }) => {
             ))}
           </nav>
 
-          {/* Action CTAs + Theme Toggle */}
-          <div className="hidden lg:flex items-center gap-3">
+          {/* Action CTAs + Command Palette + Theme Toggle */}
+          <div className="hidden lg:flex items-center gap-2.5">
+            {/* Command Palette Spotlight Launcher */}
+            <CommandPalette onOpenConsultation={onOpenConsultation} />
+
             <button
               onClick={toggleTheme}
               className="p-2.5 rounded-full bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[var(--text-muted)] hover:text-[var(--text-main)] hover:scale-110 active:scale-95 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
@@ -143,11 +148,6 @@ export const Navbar = ({ onOpenConsultation }) => {
                 <Moon className="w-4 h-4 text-slate-700" />
               )}
             </button>
-
-            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-medium cursor-default">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-ping"></span>
-              <span>Available for Q3/Q4</span>
-            </div>
 
             <button
               onClick={onOpenConsultation}

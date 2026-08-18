@@ -4,8 +4,10 @@ import { ThemeProvider } from './context/ThemeContext';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { ClientTicker } from './components/ClientTicker';
+import { GlobalTimeHUD } from './components/GlobalTimeHUD';
 import { ServicesBento } from './components/ServicesBento';
 import { TechMatrix } from './components/TechMatrix';
+import { PerformanceBenchmark } from './components/PerformanceBenchmark';
 import { ProcessFlow } from './components/ProcessFlow';
 import { CaseStudies } from './components/CaseStudies';
 import { CostEstimator } from './components/CostEstimator';
@@ -65,15 +67,17 @@ export function MainLayout() {
   return (
     <div className="min-h-screen bg-[var(--bg-page)] text-[var(--text-main)] selection:bg-[#E51A4B] selection:text-white font-sans relative transition-colors duration-400">
       
-      {/* Top Navbar */}
+      {/* Top Navbar with Cmd+K Command Palette */}
       <Navbar onOpenConsultation={() => handleOpenConsultation()} />
 
       {/* Main Home Page Sections */}
       <main>
         <Hero onOpenConsultation={() => handleOpenConsultation()} />
         <ClientTicker />
+        <GlobalTimeHUD onOpenConsultation={() => handleOpenConsultation()} />
         <ServicesBento onSelectService={(serviceName) => handleOpenConsultation({ project: serviceName, budget: '$5,000 - $15,000' })} />
         <TechMatrix />
+        <PerformanceBenchmark onOpenConsultation={() => handleOpenConsultation()} />
         <ProcessFlow />
         <CaseStudies onOpenConsultation={() => handleOpenConsultation()} />
         <CostEstimator onBookEstimate={(estimateData) => handleOpenConsultation(estimateData)} />

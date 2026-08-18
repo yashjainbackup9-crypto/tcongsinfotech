@@ -6,10 +6,11 @@ const SECTIONS = [
   { id: 'clients', name: 'Partners' },
   { id: 'services', name: 'Services' },
   { id: 'tech-stack', name: 'Tech Matrix' },
+  { id: 'benchmark', name: 'Benchmark' },
   { id: 'process', name: 'Framework' },
   { id: 'case-studies', name: 'Case Studies' },
   { id: 'estimator', name: 'Estimator' },
-  { id: 'faq', name: 'FAQ' },
+  { id: 'faqs', name: 'FAQ' },
   { id: 'contact', name: 'Contact' }
 ];
 

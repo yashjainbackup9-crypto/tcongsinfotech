@@ -1,11 +1,27 @@
 import React, { useState } from 'react';
-import { Calculator, Sparkles, Check, ArrowRight, Shield, Zap, Clock } from 'lucide-react';
+import { Calculator, Sparkles, Check, ArrowRight, Shield, Zap, Clock, Globe } from 'lucide-react';
 import { ScrollReveal } from './ScrollReveal';
 
 export const CostEstimator = ({ onBookEstimate }) => {
   const [projectType, setProjectType] = useState('web-app');
   const [tier, setTier] = useState('growth');
   const [selectedAddons, setSelectedAddons] = useState(['ai-integration', 'geo-seo']);
+  const [currency, setCurrency] = useState('USD');
+
+  const currencies = {
+    USD: { symbol: '$', rate: 1.0, label: 'USD ($)', flag: '🇺🇸' },
+    INR: { symbol: '₹', rate: 84.0, label: 'INR (₹)', flag: '🇮🇳' },
+    AED: { symbol: 'AED ', rate: 3.67, label: 'AED (د.إ)', flag: '🇦🇪' },
+    EUR: { symbol: '€', rate: 0.92, label: 'EUR (€)', flag: '🇪🇺' },
+    GBP: { symbol: '£', rate: 0.78, label: 'GBP (£)', flag: '🇬🇧' }
+  };
+
+  const currentCurrency = currencies[currency] || currencies.USD;
+
+  const formatPrice = (usdAmount) => {
+    const converted = Math.round(usdAmount * currentCurrency.rate);
+    return `${currentCurrency.symbol}${converted.toLocaleString()}`;
+  };
 
   const projectTypes = [
     { id: 'web-app', label: 'Custom Web App', base: 2500, time: 3 },
@@ -63,14 +79,32 @@ export const CostEstimator = ({ onBookEstimate }) => {
           <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E51A4B]/10 border border-[#E51A4B]/20 text-[#E51A4B] text-[11px] sm:text-xs font-semibold uppercase tracking-wider mb-3 sm:mb-4">
               <Calculator className="w-3.5 h-3.5" />
-              <span>Interactive Scope Calculator</span>
+              <span>Interactive Scope & Currency Calculator</span>
             </div>
             <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[var(--text-main)] tracking-tight">
               Estimate Project <span className="primary-gradient-text">Budget & Timeline.</span>
             </h2>
             <p className="text-[var(--text-muted)] text-xs sm:text-sm md:text-base mt-3 sm:mt-4 leading-relaxed">
-              Get instant clarity on estimated investment and delivery sprints based on your project parameters.
+              Get instant clarity on estimated investment and delivery sprints based on your project parameters with multi-currency conversion.
             </p>
+
+            {/* Multi-Currency Selector Tabs */}
+            <div className="flex items-center justify-center gap-1.5 mt-6 flex-wrap">
+              {Object.entries(currencies).map(([code, cur]) => (
+                <button
+                  key={code}
+                  onClick={() => setCurrency(code)}
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none ${
+                    currency === code
+                      ? 'bg-[#E51A4B] text-white shadow-md font-bold scale-105'
+                      : 'bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[var(--text-muted)] hover:text-[var(--text-main)]'
+                  }`}
+                >
+                  <span>{cur.flag}</span>
+                  <span>{code}</span>
+                </button>
+              ))}
+            </div>
           </div>
         </ScrollReveal>
 
@@ -162,7 +196,9 @@ export const CostEstimator = ({ onBookEstimate }) => {
                           </div>
                           <span className="text-[11px] sm:text-xs text-[var(--text-main)]">{add.label}</span>
                         </div>
-                        <span className="font-mono text-[#E51A4B] dark:text-[#E2EC07] text-[10px] sm:text-[11px] font-bold shrink-0 pl-1">+${add.price}</span>
+                        <span className="font-mono text-[#E51A4B] dark:text-[#E2EC07] text-[10px] sm:text-[11px] font-bold shrink-0 pl-1">
+                          +{formatPrice(add.price)}
+                        </span>
                       </button>
                     );
                   })}
@@ -183,11 +219,11 @@ export const CostEstimator = ({ onBookEstimate }) => {
                   </div>
 
                   <div className="text-[11px] sm:text-xs text-[var(--text-muted)] font-medium mb-0.5 sm:mb-1">
-                    Estimated Investment Window
+                    Estimated Investment Window ({currency})
                   </div>
                   <div className="text-3xl xs:text-4xl sm:text-5xl font-black text-[var(--text-main)] tracking-tight mb-2 group-hover:scale-[1.02] transition-transform duration-300">
-                    ${estimatedMin.toLocaleString()} – ${estimatedMax.toLocaleString()}
-                    <span className="text-xs font-normal text-[var(--text-muted)] font-sans ml-1 sm:ml-2">USD</span>
+                    {formatPrice(estimatedMin)} – {formatPrice(estimatedMax)}
+                    <span className="text-xs font-normal text-[var(--text-muted)] font-sans ml-1 sm:ml-2">{currency}</span>
                   </div>
 
                   <div className="flex items-center gap-2 text-xs sm:text-sm text-[#E51A4B] dark:text-[#E2EC07] font-semibold mb-5 sm:mb-6">
@@ -220,7 +256,7 @@ export const CostEstimator = ({ onBookEstimate }) => {
                     onClick={() => onBookEstimate({
                       project: currentProject.label,
                       tier: currentTier.label,
-                      budget: `$${estimatedMin.toLocaleString()} - $${estimatedMax.toLocaleString()}`,
+                      budget: `${formatPrice(estimatedMin)} - ${formatPrice(estimatedMax)} (${currency})`,
                       timeline: `${estimatedWeeks}-${estimatedWeeks + 2} Weeks`
                     })}
                     className="w-full py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-[#E51A4B] to-[#D01540] text-white font-bold text-xs sm:text-base shadow-xl shadow-[#E51A4B]/30 hover:shadow-[#E51A4B]/50 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 group focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
