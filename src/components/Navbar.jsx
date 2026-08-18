@@ -105,7 +105,7 @@ export const Navbar = ({ onOpenConsultation }) => {
               <img 
                 src="/assets/frontend-assets/images/svgs/logo.svg" 
                 alt="Tcongs Infotech Logo" 
-                className="h-8 sm:h-9 w-auto object-contain brightness-105 group-hover:scale-105 transition-transform duration-200"
+                className="h-8 sm:h-9 w-auto object-contain brightness-100 dark:brightness-125 dark:contrast-125 group-hover:scale-105 transition-transform duration-200"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
                   const fallback = e.currentTarget.nextElementSibling;
@@ -128,7 +128,7 @@ export const Navbar = ({ onOpenConsultation }) => {
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1 bg-black/[0.03] dark:bg-white/[0.03] p-1.5 rounded-full border border-black/5 dark:border-white/[0.08] backdrop-blur-md">
+          <nav className="hidden lg:flex items-center gap-1 bg-black/[0.04] dark:bg-white/[0.04] p-1.5 rounded-full border border-black/10 dark:border-white/[0.08] backdrop-blur-md">
             {navLinks.map((link) => {
               const isActive = location.pathname === link.href;
               return (
@@ -139,7 +139,7 @@ export const Navbar = ({ onOpenConsultation }) => {
                   className={`px-3.5 py-1.5 text-xs xl:text-sm font-semibold rounded-full transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#E51A4B] ${
                     isActive 
                       ? 'bg-[#E51A4B] text-white shadow-md shadow-[#E51A4B]/25' 
-                      : 'text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-black/[0.05] dark:hover:bg-white/[0.08]'
+                      : 'text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-black/[0.06] dark:hover:bg-white/[0.08]'
                   }`}
                 >
                   {link.name}

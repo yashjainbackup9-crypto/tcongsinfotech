@@ -716,50 +716,52 @@ export const TECH_STACK = {
     { name: "Flutter 3", category: "MOBILE", level: "Expert", icon: "Smartphone" },
     { name: "React Native", category: "MOBILE", level: "Advanced", icon: "Smartphone" },
     { name: "Node.js", category: "BACKEND", level: "Expert", icon: "Server" },
-    { name: "Python / FastAPI", category: "AI & BACKEND", level: "Advanced", icon: "Terminal" },
-    { name: "TypeScript", category: "LANGUAGES", level: "Expert", icon: "Code" },
+    { name: "Python / FastAPI", category: "BACKEND", level: "Advanced", icon: "Terminal" },
+    { name: "TypeScript", category: "FRONTEND", level: "Expert", icon: "Code" },
     { name: "Tailwind CSS v4", category: "FRONTEND", level: "Expert", icon: "Palette" },
-    { name: "PostgreSQL", category: "DATABASE", level: "Expert", icon: "Database" },
-    { name: "Redis Cache", category: "DATABASE", level: "Expert", icon: "Zap" },
+    { name: "PostgreSQL", category: "BACKEND", level: "Expert", icon: "Database" },
+    { name: "Redis Cache", category: "BACKEND", level: "Expert", icon: "Zap" },
     { name: "AWS EKS / ECS", category: "DEVOPS", level: "Expert", icon: "Cloud" },
     { name: "Docker & Kubernetes", category: "DEVOPS", level: "Expert", icon: "Cpu" },
     { name: "Terraform IaC", category: "DEVOPS", level: "Advanced", icon: "Shield" },
     { name: "Shopify Plus", category: "COMMERCE", level: "Expert", icon: "ShoppingBag" },
     { name: "Amazon SP-API", category: "COMMERCE", level: "Expert", icon: "ShoppingBag" },
-    { name: "OpenAI & Claude 3.7", category: "AI", level: "Expert", icon: "Sparkles" },
-    { name: "Pinecone / Qdrant", category: "AI", level: "Advanced", icon: "Database" },
-    { name: "Figma Systems", category: "DESIGN", level: "Expert", icon: "Layers" }
+    { name: "OpenAI & Claude 3.7", category: "AI_AUTOMATION", level: "Expert", icon: "Sparkles" },
+    { name: "Pinecone / Qdrant", category: "AI_AUTOMATION", level: "Advanced", icon: "Database" },
+    { name: "Figma Systems", category: "FRONTEND", level: "Expert", icon: "Layers" }
   ],
   FRONTEND: [
-    { name: "React 19", level: "Expert", icon: "Code" },
-    { name: "Next.js 15", level: "Expert", icon: "Code" },
-    { name: "TypeScript", level: "Expert", icon: "Code" },
-    { name: "Tailwind CSS v4", level: "Expert", icon: "Palette" },
-    { name: "Vite", level: "Expert", icon: "Zap" }
+    { name: "React 19", category: "FRONTEND", level: "Expert", icon: "Code" },
+    { name: "Next.js 15", category: "FRONTEND", level: "Expert", icon: "Code" },
+    { name: "TypeScript", category: "FRONTEND", level: "Expert", icon: "Code" },
+    { name: "Tailwind CSS v4", category: "FRONTEND", level: "Expert", icon: "Palette" },
+    { name: "Vite", category: "FRONTEND", level: "Expert", icon: "Zap" },
+    { name: "Figma Systems", category: "FRONTEND", level: "Expert", icon: "Layers" }
   ],
   MOBILE: [
-    { name: "Flutter 3", level: "Expert", icon: "Smartphone" },
-    { name: "React Native", level: "Advanced", icon: "Smartphone" },
-    { name: "Swift (iOS)", level: "Advanced", icon: "Smartphone" },
-    { name: "Kotlin (Android)", level: "Advanced", icon: "Smartphone" }
+    { name: "Flutter 3", category: "MOBILE", level: "Expert", icon: "Smartphone" },
+    { name: "React Native", category: "MOBILE", level: "Advanced", icon: "Smartphone" },
+    { name: "Swift (iOS)", category: "MOBILE", level: "Advanced", icon: "Smartphone" },
+    { name: "Kotlin (Android)", category: "MOBILE", level: "Advanced", icon: "Smartphone" }
   ],
   BACKEND: [
-    { name: "Node.js", level: "Expert", icon: "Server" },
-    { name: "Python / FastAPI", level: "Advanced", icon: "Terminal" },
-    { name: "PostgreSQL", level: "Expert", icon: "Database" },
-    { name: "Redis Cache", level: "Expert", icon: "Zap" }
+    { name: "Node.js", category: "BACKEND", level: "Expert", icon: "Server" },
+    { name: "Python / FastAPI", category: "BACKEND", level: "Advanced", icon: "Terminal" },
+    { name: "PostgreSQL", category: "BACKEND", level: "Expert", icon: "Database" },
+    { name: "Redis Cache", category: "BACKEND", level: "Expert", icon: "Zap" },
+    { name: "Shopify Plus", category: "BACKEND", level: "Expert", icon: "ShoppingBag" }
   ],
   DEVOPS: [
-    { name: "AWS EKS / ECS", level: "Expert", icon: "Cloud" },
-    { name: "Docker & Kubernetes", level: "Expert", icon: "Cpu" },
-    { name: "Terraform IaC", level: "Advanced", icon: "Shield" },
-    { name: "GitHub Actions", level: "Expert", icon: "Cpu" }
+    { name: "AWS EKS / ECS", category: "DEVOPS", level: "Expert", icon: "Cloud" },
+    { name: "Docker & Kubernetes", category: "DEVOPS", level: "Expert", icon: "Cpu" },
+    { name: "Terraform IaC", category: "DEVOPS", level: "Advanced", icon: "Shield" },
+    { name: "GitHub Actions", category: "DEVOPS", level: "Expert", icon: "Cpu" }
   ],
   AI_AUTOMATION: [
-    { name: "OpenAI & Claude 3.7", level: "Expert", icon: "Sparkles" },
-    { name: "Pinecone / Qdrant", level: "Advanced", icon: "Database" },
-    { name: "LangChain & LlamaIndex", level: "Advanced", icon: "Cpu" },
-    { name: "n8n Workflows", level: "Expert", icon: "Zap" }
+    { name: "OpenAI & Claude 3.7", category: "AI_AUTOMATION", level: "Expert", icon: "Sparkles" },
+    { name: "Pinecone / Qdrant", category: "AI_AUTOMATION", level: "Advanced", icon: "Database" },
+    { name: "LangChain & LlamaIndex", category: "AI_AUTOMATION", level: "Advanced", icon: "Cpu" },
+    { name: "n8n Workflows", category: "AI_AUTOMATION", level: "Expert", icon: "Zap" }
   ]
 };
 

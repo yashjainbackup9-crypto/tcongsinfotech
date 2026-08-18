@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
 
 @theme {
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -46,7 +47,7 @@
     --text-main: #0F172A;
     --text-muted: #475569;
     --text-subtle: #64748B;
-    --nav-bg: rgba(255, 255, 255, 0.88);
+    --nav-bg: rgba(255, 255, 255, 0.92);
   }
 
   html {
@@ -107,18 +108,10 @@
   }
 
   /* Accessible Focus Rings */
-  :focus-visible {
+  button:focus-visible, 
+  a:focus-visible {
     outline: 2px solid #E51A4B;
     outline-offset: 2px;
-  }
-
-  button:focus-visible, 
-  a:focus-visible, 
-  input:focus-visible, 
-  select:focus-visible, 
-  textarea:focus-visible {
-    outline: 2px solid #E51A4B !important;
-    outline-offset: 2px !important;
   }
 }
 

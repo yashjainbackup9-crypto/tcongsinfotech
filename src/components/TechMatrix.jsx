@@ -7,24 +7,34 @@ export const TechMatrix = () => {
   const [selectedCategory, setSelectedCategory] = useState("ALL");
   const [searchQuery, setSearchQuery] = useState("");
 
+  const categoryLabels = {
+    ALL: "ALL",
+    FRONTEND: "FRONTEND",
+    MOBILE: "MOBILE",
+    BACKEND: "BACKEND",
+    DEVOPS: "DEVOPS",
+    AI_AUTOMATION: "AI_AUTOMATION"
+  };
+
   const categories = Object.keys(TECH_STACK);
 
-  // Flatten all tech items for continuous multi-row carousels
+  // Flatten tech items for continuous multi-row carousels
   const row1Items = [
-    ...(TECH_STACK["Frontend & Mobile"] || []),
-    ...(TECH_STACK["Backend & Database"] || [])
+    ...(TECH_STACK.FRONTEND || []),
+    ...(TECH_STACK.MOBILE || [])
   ];
 
   const row2Items = [
-    ...(TECH_STACK["Cloud & DevOps"] || []),
-    ...(TECH_STACK["E-Commerce & Tools"] || [])
+    ...(TECH_STACK.BACKEND || []),
+    ...(TECH_STACK.DEVOPS || []),
+    ...(TECH_STACK.AI_AUTOMATION || [])
   ];
 
-  const allItems = [...row1Items, ...row2Items];
+  const allItems = TECH_STACK.ALL || [...row1Items, ...row2Items];
 
   const filteredItems = selectedCategory === "ALL" 
-    ? allItems.filter(i => i.name.toLowerCase().includes(searchQuery.toLowerCase()))
-    : (TECH_STACK[selectedCategory] || []).filter(i => i.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    ? allItems.filter(i => i.name.toLowerCase().includes(searchQuery.toLowerCase()) || (i.category && i.category.toLowerCase().includes(searchQuery.toLowerCase())))
+    : (TECH_STACK[selectedCategory] || []).filter(i => i.name.toLowerCase().includes(searchQuery.toLowerCase()) || (i.category && i.category.toLowerCase().includes(searchQuery.toLowerCase())));
 
   return (
     <section id="tech-stack" className="py-16 sm:py-24 border-t border-black/5 dark:border-white/[0.06] bg-black/[0.01] dark:bg-[#0A0A0D] relative overflow-hidden">
@@ -58,13 +68,13 @@ export const TechMatrix = () => {
                     setSelectedCategory(cat);
                     setSearchQuery("");
                   }}
-                  className={`flex items-center gap-1.5 sm:gap-2 px-4 py-2 rounded-full text-xs font-semibold transition-all whitespace-nowrap shrink-0 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none ${
+                  className={`flex items-center gap-1.5 sm:gap-2 px-4 py-2 rounded-full text-xs font-semibold transition-all whitespace-nowrap shrink-0 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none cursor-pointer ${
                     selectedCategory === cat
                       ? 'bg-[#E51A4B] text-white shadow-lg shadow-[#E51A4B]/20 font-bold scale-105'
                       : 'bg-black/[0.03] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 text-[var(--text-muted)] hover:bg-black/[0.06] dark:hover:bg-white/[0.08] hover:text-[var(--text-main)]'
                   }`}
                 >
-                  <span>{cat}</span>
+                  <span>{categoryLabels[cat] || cat}</span>
                 </button>
               ))}
             </div>
@@ -77,7 +87,7 @@ export const TechMatrix = () => {
                 placeholder="Search any technology..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 sm:py-2.5 rounded-full bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-xs text-[var(--text-main)] placeholder-[var(--text-subtle)] focus:outline-none focus:border-[#E51A4B] transition-colors focus-visible:ring-2 focus-visible:ring-[#E51A4B]"
+                className="w-full pl-10 pr-4 py-2 sm:py-2.5 rounded-full bg-black/[0.03] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-xs text-[var(--text-main)] placeholder-[var(--text-subtle)] focus:outline-none focus:border-[#E51A4B] transition-colors"
               />
             </div>
 

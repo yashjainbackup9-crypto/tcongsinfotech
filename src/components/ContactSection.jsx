@@ -238,14 +238,14 @@ export const ContactSection = ({ prefillData }) => {
                         <select
                           value={formData.service}
                           onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                          className="w-full px-3.5 py-3 rounded-xl bg-white dark:bg-[#14141C] border border-black/10 dark:border-white/10 text-base sm:text-sm text-[var(--text-main)] focus:outline-none focus:border-[#E51A4B] transition-colors"
+                          className="w-full px-3.5 py-3 rounded-xl bg-black/[0.02] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-base sm:text-sm text-[var(--text-main)] focus:outline-none focus:border-[#E51A4B] transition-colors cursor-pointer"
                         >
-                          <option value="Web & Mobile App Development">Web & Mobile App Development</option>
-                          <option value="Custom SaaS & Enterprise Software">Custom SaaS & Enterprise Software</option>
-                          <option value="E-Commerce & Marketplace Management">E-Commerce & Marketplace Management</option>
-                          <option value="Branding & UI/UX Design">Branding & UI/UX Design</option>
-                          <option value="Performance Marketing & GEO">Performance Marketing & GEO</option>
-                          <option value="Startup MVP & Consulting">Startup MVP & Consulting</option>
+                          <option value="Web & Mobile App Development" className="bg-[var(--bg-page)] text-[var(--text-main)]">Web & Mobile App Development</option>
+                          <option value="Custom SaaS & Enterprise Software" className="bg-[var(--bg-page)] text-[var(--text-main)]">Custom SaaS & Enterprise Software</option>
+                          <option value="E-Commerce & Marketplace Management" className="bg-[var(--bg-page)] text-[var(--text-main)]">E-Commerce & Marketplace Management</option>
+                          <option value="Branding & UI/UX Design" className="bg-[var(--bg-page)] text-[var(--text-main)]">Branding & UI/UX Design</option>
+                          <option value="Performance Marketing & GEO" className="bg-[var(--bg-page)] text-[var(--text-main)]">Performance Marketing & GEO</option>
+                          <option value="Startup MVP & Consulting" className="bg-[var(--bg-page)] text-[var(--text-main)]">Startup MVP & Consulting</option>
                         </select>
                       </div>
                     </div>

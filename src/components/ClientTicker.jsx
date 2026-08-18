@@ -123,14 +123,14 @@ export const ClientTicker = () => {
           {[...ecosystemItems, ...ecosystemItems].map((item, idx) => (
             <div
               key={idx}
-              className="inline-flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-white dark:bg-white/[0.04] border border-black/10 dark:border-white/[0.08] text-[var(--text-main)] font-bold text-xs sm:text-sm hover:border-[#E51A4B]/40 hover:-translate-y-0.5 transition-all duration-200 cursor-default shadow-sm group"
+              className="inline-flex items-center gap-3 px-4 py-2.5 rounded-2xl glass-panel border border-black/10 dark:border-white/[0.08] text-[var(--text-main)] font-bold text-xs sm:text-sm hover:border-[#E51A4B]/40 hover:-translate-y-0.5 transition-all duration-200 cursor-default shadow-sm group"
             >
               {/* High-Contrast SVG Icon Container */}
-              <div className="w-7 h-7 rounded-xl bg-black/[0.05] dark:bg-white/[0.08] border border-black/10 dark:border-white/10 flex items-center justify-center p-1.5 shrink-0 group-hover:scale-110 transition-transform">
+              <div className="w-7 h-7 rounded-xl bg-black/[0.04] dark:bg-white/[0.08] border border-black/10 dark:border-white/10 flex items-center justify-center p-1.5 shrink-0 group-hover:scale-110 transition-transform">
                 <img 
                   src={item.icon} 
                   alt={item.name} 
-                  className="w-full h-full object-contain filter brightness-0 opacity-85 dark:brightness-100 dark:opacity-100 dark:invert-0"
+                  className="w-full h-full object-contain filter brightness-0 opacity-85 dark:brightness-200 dark:contrast-125 dark:opacity-100"
                   onError={(e) => {
                     e.currentTarget.style.display = 'none';
                   }}

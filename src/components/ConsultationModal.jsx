@@ -144,13 +144,13 @@ export const ConsultationModal = ({ isOpen, onClose, initialData }) => {
                   <select
                     value={formData.timezone}
                     onChange={(e) => setFormData({ ...formData, timezone: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-[#14141C] border border-black/10 dark:border-white/10 text-base sm:text-xs text-[var(--text-main)] focus:outline-none focus:border-[#E51A4B]"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-base sm:text-xs text-[var(--text-main)] focus:outline-none focus:border-[#E51A4B] cursor-pointer"
                   >
-                    <option value="EST (US East)">EST (US East - New York)</option>
-                    <option value="PST (US West)">PST (US West - San Francisco)</option>
-                    <option value="GST (Dubai / UAE)">GST (Dubai / UAE / Gulf)</option>
-                    <option value="GMT (UK / Europe)">GMT (London / UK)</option>
-                    <option value="IST (India Standard)">IST (India / Asia Pacific)</option>
+                    <option value="EST (US East)" className="bg-[var(--bg-page)] text-[var(--text-main)]">EST (US East - New York)</option>
+                    <option value="PST (US West)" className="bg-[var(--bg-page)] text-[var(--text-main)]">PST (US West - San Francisco)</option>
+                    <option value="GST (Dubai / UAE)" className="bg-[var(--bg-page)] text-[var(--text-main)]">GST (Dubai / UAE / Gulf)</option>
+                    <option value="GMT (UK / Europe)" className="bg-[var(--bg-page)] text-[var(--text-main)]">GMT (London / UK)</option>
+                    <option value="IST (India Standard)" className="bg-[var(--bg-page)] text-[var(--text-main)]">IST (India / Asia Pacific)</option>
                   </select>
                 </div>
 
@@ -161,9 +161,9 @@ export const ConsultationModal = ({ isOpen, onClose, initialData }) => {
                   <select
                     value={formData.timeSlot}
                     onChange={(e) => setFormData({ ...formData, timeSlot: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-white dark:bg-[#14141C] border border-black/10 dark:border-white/10 text-base sm:text-xs text-[var(--text-main)] focus:outline-none focus:border-[#E51A4B]"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-black/[0.02] dark:bg-white/[0.04] border border-black/10 dark:border-white/10 text-base sm:text-xs text-[var(--text-main)] focus:outline-none focus:border-[#E51A4B] cursor-pointer"
                   >
-                    {timeSlots.map(t => <option key={t} value={t}>{t}</option>)}
+                    {timeSlots.map(t => <option key={t} value={t} className="bg-[var(--bg-page)] text-[var(--text-main)]">{t}</option>)}
                   </select>
                 </div>
               </div>

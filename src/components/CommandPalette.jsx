@@ -13,8 +13,7 @@ import {
   Briefcase, 
   BookOpen, 
   Layers, 
-  X,
-  ExternalLink
+  X
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { SERVICES, CASE_STUDIES_DETAILED, INSIGHTS_DETAILED } from '../data/content';
@@ -159,13 +158,16 @@ export const CommandPalette = ({ onOpenConsultation }) => {
 
       {/* Modal Backdrop & Spotlight Launcher */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-black/60 backdrop-blur-md animate-in fade-in duration-200">
+        <div 
+          className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-black/70 dark:bg-black/80 backdrop-blur-md animate-in fade-in duration-200"
+          onClick={() => setIsOpen(false)}
+        >
           <div 
             className="w-full max-w-xl glass-panel rounded-3xl border border-black/10 dark:border-white/15 overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200 text-left bg-[var(--bg-card)]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Search Input Bar */}
-            <div className="p-4 border-b border-black/10 dark:border-white/10 flex items-center gap-3">
+            <div className="p-4 border-b border-black/10 dark:border-white/10 flex items-center gap-3 bg-black/[0.02] dark:bg-white/[0.02] transition-colors focus-within:bg-black/[0.04] dark:focus-within:bg-white/[0.04]">
               <Search className="w-5 h-5 text-[#E51A4B] shrink-0" />
               <input
                 ref={inputRef}
@@ -177,11 +179,12 @@ export const CommandPalette = ({ onOpenConsultation }) => {
                 }}
                 onKeyDown={handleKeyDownList}
                 placeholder="Type a command, service, case study, or page..."
-                className="w-full bg-transparent text-sm text-[var(--text-main)] placeholder-[var(--text-muted)] focus:outline-none"
+                className="w-full bg-transparent text-sm text-[var(--text-main)] placeholder-[var(--text-muted)] focus:outline-none outline-none border-none ring-0 shadow-none"
               />
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                className="p-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
+                aria-label="Close Spotlight"
               >
                 <X className="w-4 h-4" />
               </button>
