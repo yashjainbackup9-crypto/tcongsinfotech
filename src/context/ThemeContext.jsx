@@ -9,6 +9,8 @@ export const ThemeProvider = ({ children }) => {
     return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
   });
 
+  const [isThemeToggleHighlighted, setIsThemeToggleHighlighted] = useState(false);
+
   useEffect(() => {
     const root = document.documentElement;
     if (theme === 'light') {
@@ -22,11 +24,26 @@ export const ThemeProvider = ({ children }) => {
   }, [theme]);
 
   const toggleTheme = () => {
+    setIsThemeToggleHighlighted(false);
     setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
   };
 
+  const triggerThemeToggleHighlight = () => {
+    setIsThemeToggleHighlighted(true);
+    setTimeout(() => {
+      setIsThemeToggleHighlighted(false);
+    }, 6000);
+  };
+
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
+    <ThemeContext.Provider value={{ 
+      theme, 
+      toggleTheme, 
+      setTheme, 
+      isThemeToggleHighlighted, 
+      setIsThemeToggleHighlighted,
+      triggerThemeToggleHighlight 
+    }}>
       {children}
     </ThemeContext.Provider>
   );

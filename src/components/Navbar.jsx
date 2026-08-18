@@ -19,7 +19,7 @@ import { CommandPalette } from './CommandPalette';
 export const Navbar = ({ onOpenConsultation }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme, isThemeToggleHighlighted, setIsThemeToggleHighlighted } = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -153,18 +153,42 @@ export const Navbar = ({ onOpenConsultation }) => {
             {/* Command Palette Spotlight Launcher */}
             <CommandPalette onOpenConsultation={onOpenConsultation} />
 
-            <button
-              onClick={toggleTheme}
-              className="p-2.5 rounded-full bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[var(--text-muted)] hover:text-[var(--text-main)] hover:scale-110 active:scale-95 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
-              aria-label="Toggle Theme"
-              title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
-            >
-              {theme === 'dark' ? (
-                <Sun className="w-4 h-4 text-[#E2EC07]" />
-              ) : (
-                <Moon className="w-4 h-4 text-slate-700" />
+            {/* Highlighting Theme Toggle */}
+            <div className="relative">
+              <button
+                onClick={toggleTheme}
+                className={`p-2.5 rounded-full border transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none relative cursor-pointer ${
+                  isThemeToggleHighlighted
+                    ? 'bg-[#E51A4B] text-white ring-4 ring-[#E51A4B]/60 shadow-[0_0_30px_#E51A4B] scale-110 animate-bounce border-transparent'
+                    : 'bg-black/[0.04] dark:bg-white/[0.05] border-black/10 dark:border-white/10 text-[var(--text-muted)] hover:text-[var(--text-main)] hover:scale-110 active:scale-95'
+                }`}
+                aria-label="Toggle Theme"
+                title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
+              >
+                {theme === 'dark' ? (
+                  <Sun className={`w-4 h-4 ${isThemeToggleHighlighted ? 'text-white' : 'text-[#E2EC07]'}`} />
+                ) : (
+                  <Moon className={`w-4 h-4 ${isThemeToggleHighlighted ? 'text-white' : 'text-slate-700'}`} />
+                )}
+                {isThemeToggleHighlighted && (
+                  <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[#E2EC07] rounded-full animate-ping"></span>
+                )}
+              </button>
+
+              {/* Floating Tooltip Callout Pointing Up */}
+              {isThemeToggleHighlighted && (
+                <div className="absolute right-0 top-12 z-50 w-60 p-3.5 rounded-2xl bg-black/95 dark:bg-white text-white dark:text-black shadow-2xl border border-[#E51A4B]/60 animate-in fade-in slide-in-from-top-2 duration-300 text-left">
+                  <div className="absolute -top-1.5 right-3.5 w-3 h-3 bg-black/95 dark:bg-white rotate-45 border-t border-l border-[#E51A4B]/60"></div>
+                  <div className="flex items-center gap-1.5 text-xs font-extrabold text-[#E51A4B] mb-1">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>Theme Toggle Active</span>
+                  </div>
+                  <p className="text-[11px] leading-relaxed text-slate-300 dark:text-slate-700">
+                    Switch between <strong>Obsidian Dark</strong> &amp; <strong>Clean Light</strong> mode anytime right here!
+                  </p>
+                </div>
               )}
-            </button>
+            </div>
 
             <button
               onClick={onOpenConsultation}
@@ -177,13 +201,19 @@ export const Navbar = ({ onOpenConsultation }) => {
 
           {/* Mobile Right Icons */}
           <div className="lg:hidden flex items-center gap-1.5 sm:gap-2">
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-xl bg-black/[0.05] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[var(--text-main)] active:scale-90 transition-transform focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
-              aria-label="Toggle Theme"
-            >
-              {theme === 'dark' ? <Sun className="w-4 h-4 text-[#E2EC07]" /> : <Moon className="w-4 h-4" />}
-            </button>
+            <div className="relative">
+              <button
+                onClick={toggleTheme}
+                className={`p-2 rounded-xl border text-[var(--text-main)] active:scale-90 transition-all focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none cursor-pointer ${
+                  isThemeToggleHighlighted
+                    ? 'bg-[#E51A4B] text-white ring-4 ring-[#E51A4B]/60 shadow-[0_0_20px_#E51A4B] scale-105 animate-bounce'
+                    : 'bg-black/[0.05] dark:bg-white/[0.05] border-black/10 dark:border-white/10'
+                }`}
+                aria-label="Toggle Theme"
+              >
+                {theme === 'dark' ? <Sun className="w-4 h-4 text-[#E2EC07]" /> : <Moon className="w-4 h-4" />}
+              </button>
+            </div>
             <button
               onClick={onOpenConsultation}
               className="px-3 py-2 rounded-xl bg-[#E51A4B] text-white text-xs font-semibold flex items-center gap-1.5 shadow-md shadow-[#E51A4B]/30 active:scale-95 transition-transform focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
