@@ -768,33 +768,57 @@ export const PROCESS_STEPS = [
     step: "01",
     phase: "DISCOVERY & ARCHITECTURE",
     title: "Deep Architecture Blueprint",
+    tagline: "Database schema, APIs & UX roadmap",
     timeline: "Days 1 – 3",
-    description: "Zero fluff discovery. We map your database schemas, user journeys, performance budgets, and technical risks with an actionable sprint plan.",
-    deliverable: "Technical Architecture Spec & Figma Design Tokens"
+    desc: "Zero fluff discovery. We map your database schemas, user journeys, performance budgets, and technical risks with an actionable sprint plan.",
+    deliverables: [
+      "Technical Architecture Specification",
+      "Figma Design Tokens & Core Wireframes",
+      "Database Schema & Entity Models",
+      "Sprint Milestones & Risk Assessment"
+    ]
   },
   {
     step: "02",
     phase: "RAPID SPRINT DELIVERY",
     title: "Bi-Weekly High-Velocity Sprints",
+    tagline: "React 19, Flutter & Edge APIs",
     timeline: "Weeks 1 – 4",
-    description: "Modular development with 100% TypeScript, clean React 19 / Flutter components, and test-driven microservices shipped to staging weekly.",
-    deliverable: "Live Staging Demos & PR Code Reviews"
+    desc: "Modular development with 100% TypeScript, clean React 19 / Flutter components, and test-driven microservices shipped to staging weekly.",
+    deliverables: [
+      "Live Staging Environment Demos",
+      "Clean TypeScript & React Components",
+      "REST & GraphQL Microservices",
+      "Weekly Progress Screen Recordings"
+    ]
   },
   {
     step: "03",
     phase: "RIGOROUS QA & STRESS TESTING",
     title: "Lighthouse & Load Testing",
+    tagline: "Concurrency stress & WCAG audits",
     timeline: "Week 5",
-    description: "We stress-test concurrency, simulate high-traffic checkout spikes, audit WCAG accessibility, and verify 99/100 Lighthouse performance.",
-    deliverable: "Security Audit, QA Matrix & Load Benchmark"
+    desc: "We stress-test concurrency, simulate high-traffic checkout spikes, audit WCAG accessibility, and verify 99/100 Lighthouse performance.",
+    deliverables: [
+      "99/100 Certified Lighthouse Speed Audit",
+      "High-Concurrency Load Testing Report",
+      "OWASP Security Vulnerability Matrix",
+      "Cross-Browser & Device Test Suite"
+    ]
   },
   {
     step: "04",
     phase: "PRODUCTION LAUNCH & HANDOVER",
     title: "Edge Deployment & IP Handover",
+    tagline: "Zero downtime & 100% IP transfer",
     timeline: "Week 6+",
-    description: "Zero-downtime production deployment with full DNS routing, SSL certificates, 100% source code repository handover, and 60 days hypercare.",
-    deliverable: "Production Release & Full IP Ownership"
+    desc: "Zero-downtime production deployment with full DNS routing, SSL certificates, 100% source code repository handover, and 60 days hypercare.",
+    deliverables: [
+      "Zero-Downtime Global Production Release",
+      "100% Git Repository & IP Handover",
+      "Figma Master Design Asset Libraries",
+      "60-Day Hypercare Warranty & Monitoring"
+    ]
   }
 ];
 
