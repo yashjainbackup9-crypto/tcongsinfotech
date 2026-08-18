@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { 
   PhoneCall, 
   Mail, 
@@ -16,79 +17,43 @@ import {
   ExternalLink,
   Globe
 } from 'lucide-react';
-import { SERVICES } from '../data/content';
 
 const FOOTER_COLUMNS = {
   "Company": [
-    { text: "About Tcongs", href: "#hero" },
-    { text: "Engineering Team", href: "#tech-stack" },
-    { text: "Delivery Framework", href: "#process" },
-    { text: "Client Case Studies", href: "#case-studies" },
-    { text: "Performance Benchmark", href: "#benchmark" },
-    { text: "Contact & Inquiries", href: "#contact" }
+    { text: "About Tcongs", href: "/about" },
+    { text: "Engineering Culture", href: "/careers" },
+    { text: "Leadership Team", href: "/about" },
+    { text: "Client Case Studies", href: "/case-studies" },
+    { text: "Tech Insights & Playbooks", href: "/insights" },
+    { text: "Contact & Discovery Lab", href: "/contact" }
   ],
   "Specialized Solutions": [
-    { text: "Custom Web & Mobile Apps", href: "#services" },
-    { text: "Enterprise SaaS Architecture", href: "#services" },
-    { text: "Shopify Plus & Marketplaces", href: "#services" },
-    { text: "UI/UX & Design Systems", href: "#services" },
-    { text: "Generative Engine Optimization", href: "#services" },
-    { text: "AI & Workflow Automation", href: "#services" }
+    { text: "Web & High-Velocity Platforms", href: "/services/web-development" },
+    { text: "Mobile App Engineering (iOS/Android)", href: "/services/mobile-apps" },
+    { text: "E-Commerce & Marketplaces", href: "/services/ecommerce-marketplaces" },
+    { text: "Cloud & DevOps Architecture", href: "/services/cloud-devops" },
+    { text: "AI & Workflow Automations", href: "/services/ai-automations" },
+    { text: "UI/UX & Design Systems", href: "/services/ui-ux-design" }
   ],
   "Platform Ecosystems": [
-    { text: "Amazon Seller & SP-API", href: "#clients" },
-    { text: "Flipkart Commerce Hub", href: "#clients" },
-    { text: "React 19 & Next.js Stack", href: "#tech-stack" },
-    { text: "Flutter Cross-Platform", href: "#tech-stack" },
-    { text: "Node.js & Python Engines", href: "#tech-stack" },
-    { text: "Edge Cloud Infrastructure", href: "#tech-stack" }
+    { text: "Amazon Seller & SP-API", href: "/services/ecommerce-marketplaces" },
+    { text: "Flipkart Commerce Hub", href: "/services/ecommerce-marketplaces" },
+    { text: "React 19 & Next.js Stack", href: "/services/web-development" },
+    { text: "Flutter Cross-Platform", href: "/services/mobile-apps" },
+    { text: "Node.js & Python Engines", href: "/services/web-development" },
+    { text: "Edge Cloud Infrastructure", href: "/services/cloud-devops" }
   ],
   "Client Resources": [
-    { text: "Project Cost Estimator", href: "#estimator" },
-    { text: "Frequently Asked Questions", href: "#faqs" },
-    { text: "Book 30-Min Architecture Call", href: "#contact" },
+    { text: "Project Sprint Estimator", href: "/pricing" },
+    { text: "Open Careers (We're Hiring)", href: "/careers" },
+    { text: "Book 30-Min Discovery Call", href: "/contact" },
     { text: "Privacy Policy & GDPR", href: "#" },
     { text: "Terms of Engagement", href: "#" },
-    { text: "Security & OWASP Standards", href: "#benchmark" }
+    { text: "Security & OWASP Standards", href: "/about" }
   ]
 };
 
 export const Footer = ({ onOpenConsultation }) => {
-  const [newsletterEmail, setNewsletterEmail] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
-
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    if (newsletterEmail) {
-      setSubscribed(true);
-    }
-  };
-
-  const handleLinkClick = (e, href) => {
-    if (href.startsWith('#')) {
-      e.preventDefault();
-      const targetId = href.replace('#', '');
-      if (targetId === '' || targetId === 'hero') {
-        if (window.lenis) {
-          window.lenis.scrollTo(0, { duration: 1.2 });
-        } else {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-      } else {
-        const el = document.getElementById(targetId);
-        if (el) {
-          if (window.lenis) {
-            window.lenis.scrollTo(el, { offset: -80, duration: 1.2 });
-          } else {
-            const navHeight = 80;
-            const targetY = el.getBoundingClientRect().top + window.pageYOffset - navHeight;
-            window.scrollTo({ top: targetY, behavior: 'smooth' });
-          }
-        }
-      }
-    }
-  };
-
   return (
     <footer className="bg-white dark:bg-[#060608] border-t border-black/10 dark:border-white/[0.08] text-[var(--text-muted)] text-xs relative overflow-hidden text-left transition-colors duration-400 font-sans">
       
@@ -100,7 +65,7 @@ export const Footer = ({ onOpenConsultation }) => {
           <div className="lg:col-span-4 flex flex-col justify-between">
             <div>
               {/* Brand Logo */}
-              <a href="#" onClick={(e) => handleLinkClick(e, '#')} className="flex items-center gap-3 mb-4 group">
+              <Link to="/" className="flex items-center gap-3 mb-4 group">
                 <img 
                   src="/assets/frontend-assets/images/svgs/logo.svg" 
                   alt="Tcongs Infotech Logo" 
@@ -119,7 +84,7 @@ export const Footer = ({ onOpenConsultation }) => {
                     tcongs <span className="text-[#E51A4B] font-light">infotech</span>
                   </span>
                 </div>
-              </a>
+              </Link>
 
               <div className="mb-2">
                 <span className="text-xs font-bold text-[#E51A4B] uppercase tracking-wider">
@@ -181,13 +146,21 @@ export const Footer = ({ onOpenConsultation }) => {
               <ul className="space-y-2.5">
                 {links.map((link, idx) => (
                   <li key={idx}>
-                    <a
-                      href={link.href}
-                      onClick={(e) => handleLinkClick(e, link.href)}
-                      className="text-[var(--text-muted)] hover:text-[#E51A4B] hover:translate-x-1 transition-all inline-block text-xs"
-                    >
-                      {link.text}
-                    </a>
+                    {link.href.startsWith('#') ? (
+                      <a
+                        href={link.href}
+                        className="text-[var(--text-muted)] hover:text-[#E51A4B] hover:translate-x-1 transition-all inline-block text-xs"
+                      >
+                        {link.text}
+                      </a>
+                    ) : (
+                      <Link
+                        to={link.href}
+                        className="text-[var(--text-muted)] hover:text-[#E51A4B] hover:translate-x-1 transition-all inline-block text-xs"
+                      >
+                        {link.text}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -197,7 +170,7 @@ export const Footer = ({ onOpenConsultation }) => {
         </div>
       </div>
 
-      {/* 2. STATS & REASSURANCE BAR (Inspired by Joy footer-stats-bar) */}
+      {/* 2. STATS & REASSURANCE BAR */}
       <div className="border-y border-black/10 dark:border-white/[0.08] bg-black/[0.02] dark:bg-[#0A0A0E] py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-6">
@@ -256,7 +229,7 @@ export const Footer = ({ onOpenConsultation }) => {
         </div>
       </div>
 
-      {/* 3. HIGH-CONVERSION CONSULTATION CTA BANNER (Inspired by Joy footer-cta-section) */}
+      {/* 3. HIGH-CONVERSION CONSULTATION CTA BANNER */}
       <div className="py-8 bg-black/[0.01] dark:bg-[#07070A]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-black/10 dark:border-white/10 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-xl">
@@ -301,7 +274,7 @@ export const Footer = ({ onOpenConsultation }) => {
         </div>
       </div>
 
-      {/* 4. BOTTOM COPYRIGHT, SECURITY & SOCIAL BAR (Inspired by Joy footer-bottom-two) */}
+      {/* 4. BOTTOM COPYRIGHT, SECURITY & SOCIAL BAR */}
       <div className="border-t border-black/10 dark:border-white/[0.08] py-6 bg-white dark:bg-[#050507]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
@@ -315,7 +288,7 @@ export const Footer = ({ onOpenConsultation }) => {
               </div>
             </div>
 
-            {/* Copyright & Maker Note */}
+            {/* Copyright */}
             <div className="text-[11px] text-[var(--text-muted)]">
               <p>
                 &copy; {new Date().getFullYear()} Tcongs Infotech. All Rights Reserved. Mumbai Office: Serving clients worldwide across USA, Canada, UAE &amp; India.
@@ -325,7 +298,7 @@ export const Footer = ({ onOpenConsultation }) => {
               </p>
             </div>
 
-            {/* Social Icons & Status */}
+            {/* Social Icons */}
             <div className="flex items-center gap-2">
               <a
                 href="https://linkedin.com"

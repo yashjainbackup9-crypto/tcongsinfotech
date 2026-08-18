@@ -1,29 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   Search, 
-  Command, 
+  Sparkles, 
+  ArrowRight, 
+  Terminal, 
+  Zap, 
   Sun, 
   Moon, 
   PhoneCall, 
   Calculator, 
-  FileText, 
   Briefcase, 
+  BookOpen, 
   Layers, 
-  Terminal, 
-  HelpCircle, 
-  Mail, 
-  ArrowRight,
   X,
-  Compass
+  ExternalLink
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { SERVICES, CASE_STUDIES_DETAILED, INSIGHTS_DETAILED } from '../data/content';
 
-export const CommandPalette = ({ onOpenConsultation, onSetCurrency }) => {
+export const CommandPalette = ({ onOpenConsultation }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const { theme, toggleTheme } = useTheme();
+  const inputRef = useRef(null);
+  const navigate = useNavigate();
 
-  // Keyboard shortcut listener: Cmd+K or Ctrl+K or /
+  // Listen for Cmd+K or Ctrl+K globally
   useEffect(() => {
     const handleKeyDown = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -33,209 +37,230 @@ export const CommandPalette = ({ onOpenConsultation, onSetCurrency }) => {
         setIsOpen(false);
       }
     };
-
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen]);
 
-  const actions = [
-    {
-      id: 'services',
-      title: 'Explore Specialized Services',
-      category: 'Navigation',
-      icon: Layers,
-      handler: () => {
-        const el = document.getElementById('services');
-        if (window.lenis) window.lenis.scrollTo(el, { offset: -80, duration: 1.2 });
-        else el?.scrollIntoView({ behavior: 'smooth' });
-        setIsOpen(false);
-      }
-    },
-    {
-      id: 'tech-stack',
-      title: 'View Engineering Tech Stack Matrix',
-      category: 'Navigation',
-      icon: Terminal,
-      handler: () => {
-        const el = document.getElementById('tech-stack');
-        if (window.lenis) window.lenis.scrollTo(el, { offset: -80, duration: 1.2 });
-        else el?.scrollIntoView({ behavior: 'smooth' });
-        setIsOpen(false);
-      }
-    },
-    {
-      id: 'process',
-      title: 'Inspect 6-Phase Delivery Framework',
-      category: 'Navigation',
-      icon: Compass,
-      handler: () => {
-        const el = document.getElementById('process');
-        if (window.lenis) window.lenis.scrollTo(el, { offset: -80, duration: 1.2 });
-        else el?.scrollIntoView({ behavior: 'smooth' });
-        setIsOpen(false);
-      }
-    },
-    {
-      id: 'case-studies',
-      title: 'Read Client Case Studies & Metrics',
-      category: 'Navigation',
-      icon: Briefcase,
-      handler: () => {
-        const el = document.getElementById('case-studies');
-        if (window.lenis) window.lenis.scrollTo(el, { offset: -80, duration: 1.2 });
-        else el?.scrollIntoView({ behavior: 'smooth' });
-        setIsOpen(false);
-      }
-    },
-    {
-      id: 'estimator',
-      title: 'Calculate Project Cost & Scope',
-      category: 'Tools',
-      icon: Calculator,
-      handler: () => {
-        const el = document.getElementById('estimator');
-        if (window.lenis) window.lenis.scrollTo(el, { offset: -80, duration: 1.2 });
-        else el?.scrollIntoView({ behavior: 'smooth' });
-        setIsOpen(false);
-      }
-    },
+  // Focus input when opened
+  useEffect(() => {
+    if (isOpen) {
+      setTimeout(() => inputRef.current?.focus(), 50);
+      setSelectedIndex(0);
+    } else {
+      setQuery('');
+    }
+  }, [isOpen]);
+
+  const staticActions = [
+    { id: 'home', title: 'Home Overview', category: 'Pages', path: '/', icon: 'Sparkles', desc: 'Main digital engineering hub' },
+    { id: 'about', title: 'About Tcongs', category: 'Pages', path: '/about', icon: 'Terminal', desc: 'Our origin, philosophy & engineering squad' },
+    { id: 'services-all', title: 'Services Catalog', category: 'Pages', path: '/services', icon: 'Layers', desc: 'Explore all 6 core engineering divisions' },
+    { id: 'case-studies-all', title: 'Case Studies Portfolio', category: 'Pages', path: '/case-studies', icon: 'Zap', desc: 'Client transformations & verified ROI' },
+    { id: 'pricing', title: 'Sprint Estimator & Pricing', category: 'Pages', path: '/pricing', icon: 'Calculator', desc: 'Calculate project budget & timeline' },
+    { id: 'careers', title: 'Careers & Open Roles', category: 'Pages', path: '/careers', icon: 'Briefcase', desc: 'Join our high-velocity engineering squad' },
+    { id: 'insights', title: 'Engineering Insights', category: 'Pages', path: '/insights', icon: 'BookOpen', desc: 'Technical playbooks & deep dives' },
+    { id: 'contact', title: 'Contact & Discovery Lab', category: 'Pages', path: '/contact', icon: 'PhoneCall', desc: 'Direct Mumbai dispatch & inquiries' },
     {
       id: 'theme',
-      title: `Toggle Theme (Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode)`,
-      category: 'Preferences',
-      icon: theme === 'dark' ? Sun : Moon,
-      handler: () => {
-        toggleTheme();
-        setIsOpen(false);
-      }
+      title: theme === 'dark' ? 'Switch to Clean Light Mode' : 'Switch to Obsidian Dark Mode',
+      category: 'Actions',
+      action: () => toggleTheme(),
+      icon: theme === 'dark' ? 'Sun' : 'Moon',
+      desc: 'Toggle visual theme'
     },
     {
       id: 'consultation',
-      title: 'Schedule 30-Minute Architecture Call',
+      title: 'Schedule 30-Min Architecture Call',
       category: 'Actions',
-      icon: PhoneCall,
-      handler: () => {
-        setIsOpen(false);
-        onOpenConsultation();
-      }
-    },
-    {
-      id: 'contact',
-      title: 'Send Direct Inquiry via Nodemailer',
-      category: 'Actions',
-      icon: Mail,
-      handler: () => {
-        const el = document.getElementById('contact');
-        if (window.lenis) window.lenis.scrollTo(el, { offset: -80, duration: 1.2 });
-        else el?.scrollIntoView({ behavior: 'smooth' });
-        setIsOpen(false);
-      }
-    },
-    {
-      id: 'faq',
-      title: 'Browse Frequently Asked Questions',
-      category: 'Help',
-      icon: HelpCircle,
-      handler: () => {
-        const el = document.getElementById('faqs');
-        if (window.lenis) window.lenis.scrollTo(el, { offset: -80, duration: 1.2 });
-        else el?.scrollIntoView({ behavior: 'smooth' });
-        setIsOpen(false);
-      }
+      action: () => onOpenConsultation(),
+      icon: 'PhoneCall',
+      desc: 'Direct strategy session with lead architect'
     }
   ];
 
-  const filteredActions = query
-    ? actions.filter(
-        (a) =>
-          a.title.toLowerCase().includes(query.toLowerCase()) ||
-          a.category.toLowerCase().includes(query.toLowerCase())
-      )
-    : actions;
+  // Dynamic Service Pages
+  const serviceActions = SERVICES.map(s => ({
+    id: `svc-${s.slug}`,
+    title: s.title,
+    category: 'Services',
+    path: `/services/${s.slug}`,
+    icon: 'Layers',
+    desc: `${s.category} • ${s.metrics}`
+  }));
+
+  // Dynamic Case Studies
+  const caseStudyActions = Object.values(CASE_STUDIES_DETAILED).map(cs => ({
+    id: `cs-${cs.slug}`,
+    title: cs.title,
+    category: 'Case Studies',
+    path: `/case-studies/${cs.slug}`,
+    icon: 'Zap',
+    desc: `${cs.client} • ${cs.duration}`
+  }));
+
+  // Dynamic Insights
+  const insightActions = INSIGHTS_DETAILED.map(art => ({
+    id: `art-${art.slug}`,
+    title: art.title,
+    category: 'Insights',
+    path: `/insights/${art.slug}`,
+    icon: 'BookOpen',
+    desc: `${art.category} • ${art.readTime}`
+  }));
+
+  const allItems = [...staticActions, ...serviceActions, ...caseStudyActions, ...insightActions];
+
+  const filteredItems = query.trim() === ''
+    ? staticActions
+    : allItems.filter(item => 
+        item.title.toLowerCase().includes(query.toLowerCase()) ||
+        item.category.toLowerCase().includes(query.toLowerCase()) ||
+        (item.desc && item.desc.toLowerCase().includes(query.toLowerCase()))
+      );
+
+  const handleSelect = (item) => {
+    setIsOpen(false);
+    if (item.action) {
+      item.action();
+    } else if (item.path) {
+      navigate(item.path);
+    }
+  };
+
+  const handleKeyDownList = (e) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setSelectedIndex(prev => (prev + 1) % filteredItems.length);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setSelectedIndex(prev => (prev - 1 + filteredItems.length) % filteredItems.length);
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (filteredItems[selectedIndex]) {
+        handleSelect(filteredItems[selectedIndex]);
+      }
+    }
+  };
 
   return (
     <>
-      {/* Floating Spotlight Launcher Pill in Navbar / Top */}
+      {/* Trigger Button in Navbar */}
       <button
         onClick={() => setIsOpen(true)}
-        className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-[var(--text-muted)] hover:text-[var(--text-main)] hover:border-[#E51A4B]/40 text-xs transition-all shadow-sm"
-        title="Open Command Palette (Cmd + K)"
+        className="hidden xl:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-xs text-[var(--text-muted)] hover:text-[var(--text-main)] hover:border-[#E51A4B]/40 transition-all cursor-pointer"
+        title="Open Spotlight Search (Cmd + K)"
       >
         <Search className="w-3.5 h-3.5" />
-        <span className="font-medium">Quick Search</span>
-        <kbd className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-black/10 dark:bg-white/10 border border-black/10 dark:border-white/10 text-[var(--text-subtle)]">
+        <span>Quick Search</span>
+        <kbd className="px-1.5 py-0.5 text-[10px] font-mono rounded bg-black/5 dark:bg-white/10 text-[var(--text-muted)]">
           ⌘K
         </kbd>
       </button>
 
-      {/* Modal Backdrop & Palette */}
+      {/* Modal Backdrop & Spotlight Launcher */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 p-4 bg-black/75 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="glass-panel w-full max-w-xl rounded-3xl border border-black/20 dark:border-white/20 shadow-2xl overflow-hidden text-left bg-gradient-to-b from-white dark:from-[#161622] to-slate-50 dark:to-[#0C0C12] animate-in zoom-in-95 duration-200">
-            
+        <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-black/60 backdrop-blur-md animate-in fade-in duration-200">
+          <div 
+            className="w-full max-w-xl glass-panel rounded-3xl border border-black/10 dark:border-white/15 overflow-hidden shadow-2xl animate-in zoom-in-95 duration-200 text-left bg-[var(--bg-card)]"
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* Search Input Bar */}
-            <div className="flex items-center gap-3 p-4 sm:p-5 border-b border-black/10 dark:border-white/10">
+            <div className="p-4 border-b border-black/10 dark:border-white/10 flex items-center gap-3">
               <Search className="w-5 h-5 text-[#E51A4B] shrink-0" />
               <input
+                ref={inputRef}
                 type="text"
-                autoFocus
-                placeholder="Type a command, search section, or tool (e.g. 'theme', 'pricing', 'tech')..."
                 value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                className="w-full bg-transparent text-sm sm:text-base text-[var(--text-main)] placeholder-[var(--text-subtle)] focus:outline-none"
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                  setSelectedIndex(0);
+                }}
+                onKeyDown={handleKeyDownList}
+                placeholder="Type a command, service, case study, or page..."
+                className="w-full bg-transparent text-sm text-[var(--text-main)] placeholder-[var(--text-muted)] focus:outline-none"
               />
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-1.5 rounded-full bg-black/5 dark:bg-white/10 text-[var(--text-muted)] hover:text-[var(--text-main)]"
+                className="p-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-main)]"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             {/* Results List */}
-            <div className="max-h-[360px] overflow-y-auto p-3 space-y-1 scrollbar-none">
-              {filteredActions.length === 0 ? (
-                <div className="p-8 text-center text-xs text-[var(--text-muted)]">
-                  No commands found matching "{query}". Try searching for 'services', 'pricing', or 'call'.
+            <div className="max-h-80 overflow-y-auto p-2 divide-y divide-black/5 dark:divide-white/5 scrollbar-thin">
+              {filteredItems.length === 0 ? (
+                <div className="p-6 text-center text-xs text-[var(--text-muted)]">
+                  No matching commands or pages found for "<strong className="text-[var(--text-main)]">{query}</strong>"
                 </div>
               ) : (
-                filteredActions.map((action) => {
-                  const Icon = action.icon;
-                  return (
-                    <button
-                      key={action.id}
-                      onClick={action.handler}
-                      className="w-full p-3 rounded-2xl flex items-center justify-between text-left hover:bg-[#E51A4B]/10 hover:border-[#E51A4B]/30 border border-transparent transition-all group cursor-pointer"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-xl bg-black/5 dark:bg-white/5 group-hover:bg-[#E51A4B] group-hover:text-white text-[var(--text-muted)] flex items-center justify-center transition-colors">
-                          <Icon className="w-4 h-4" />
-                        </div>
-                        <div>
-                          <div className="text-xs sm:text-sm font-semibold text-[var(--text-main)] group-hover:text-[#E51A4B] transition-colors">
-                            {action.title}
-                          </div>
-                          <div className="text-[10px] text-[var(--text-muted)]">
-                            {action.category}
-                          </div>
-                        </div>
+                filteredItems.map((item, idx) => (
+                  <div
+                    key={item.id}
+                    onClick={() => handleSelect(item)}
+                    onMouseEnter={() => setSelectedIndex(idx)}
+                    className={`p-3 rounded-2xl flex items-center justify-between cursor-pointer transition-all ${
+                      selectedIndex === idx
+                        ? 'bg-[#E51A4B] text-white shadow-md'
+                        : 'hover:bg-black/5 dark:hover:bg-white/5 text-[var(--text-main)]'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${
+                        selectedIndex === idx
+                          ? 'bg-white/20 text-white'
+                          : 'bg-black/[0.04] dark:bg-white/[0.06] text-[#E51A4B]'
+                      }`}>
+                        {item.icon === 'Sun' ? <Sun className="w-4 h-4" /> :
+                         item.icon === 'Moon' ? <Moon className="w-4 h-4" /> :
+                         item.icon === 'Calculator' ? <Calculator className="w-4 h-4" /> :
+                         item.icon === 'PhoneCall' ? <PhoneCall className="w-4 h-4" /> :
+                         item.icon === 'Briefcase' ? <Briefcase className="w-4 h-4" /> :
+                         item.icon === 'BookOpen' ? <BookOpen className="w-4 h-4" /> :
+                         item.icon === 'Layers' ? <Layers className="w-4 h-4" /> :
+                         <Sparkles className="w-4 h-4" />}
                       </div>
 
-                      <ArrowRight className="w-4 h-4 text-[var(--text-subtle)] group-hover:text-[#E51A4B] group-hover:translate-x-1 transition-transform" />
-                    </button>
-                  );
-                })
+                      <div className="min-w-0">
+                        <div className="text-xs sm:text-sm font-bold truncate">
+                          {item.title}
+                        </div>
+                        {item.desc && (
+                          <div className={`text-[10px] truncate ${
+                            selectedIndex === idx ? 'text-white/80' : 'text-[var(--text-muted)]'
+                          }`}>
+                            {item.desc}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 shrink-0 ml-2">
+                      <span className={`text-[9px] font-mono px-2 py-0.5 rounded-full ${
+                        selectedIndex === idx
+                          ? 'bg-white/20 text-white'
+                          : 'bg-black/5 dark:bg-white/5 text-[var(--text-muted)]'
+                      }`}>
+                        {item.category}
+                      </span>
+                      <ArrowRight className={`w-3.5 h-3.5 ${
+                        selectedIndex === idx ? 'text-white' : 'text-[var(--text-muted)] opacity-50'
+                      }`} />
+                    </div>
+
+                  </div>
+                ))
               )}
             </div>
 
-            {/* Palette Footer */}
-            <div className="p-3 bg-black/[0.02] dark:bg-white/[0.02] border-t border-black/5 dark:border-white/5 flex items-center justify-between text-[11px] text-[var(--text-muted)] px-4">
-              <div className="flex items-center gap-3">
-                <span>Navigation: <kbd className="px-1 py-0.5 rounded bg-black/5 dark:bg-white/10 font-mono text-[9px]">↑↓</kbd></span>
-                <span>Select: <kbd className="px-1 py-0.5 rounded bg-black/5 dark:bg-white/10 font-mono text-[9px]">Enter</kbd></span>
-                <span>Close: <kbd className="px-1 py-0.5 rounded bg-black/5 dark:bg-white/10 font-mono text-[9px]">ESC</kbd></span>
+            {/* Footer Shortcuts Help */}
+            <div className="p-3 bg-black/[0.02] dark:bg-white/[0.02] border-t border-black/10 dark:border-white/10 flex items-center justify-between text-[10px] text-[var(--text-muted)] font-mono">
+              <div className="flex items-center gap-2">
+                <span>Navigate: <kbd>↑</kbd> <kbd>↓</kbd></span>
+                <span>Select: <kbd>↵</kbd></span>
+                <span>Close: <kbd>Esc</kbd></span>
               </div>
-              <span className="font-mono text-[10px] text-[#E51A4B]">Tcongs OS v2.4</span>
+              <span className="text-[#E51A4B] font-bold">Tcongs Spotlight</span>
             </div>
 
           </div>

@@ -1,119 +1,82 @@
-# Tcongs Infotech — Official Home Page Redesign 🚀
+# Tcongs Infotech — Full-Scale Digital Engineering Platform 🚀
 
 [![Vite](https://img.shields.io/badge/Vite-8.2.1-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vitejs.dev/)
-[![React](https://img.shields.io/badge/React-19.2.4-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
+[![React](https://img.shields.io/badge/React-19.2.8-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
+[![React Router](https://img.shields.io/badge/React_Router-v7.1-CA4245?style=flat-square&logo=react-router&logoColor=white)](https://reactrouter.com/)
 [![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-v4.0-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![Lenis](https://img.shields.io/badge/Lenis_Scroll-1.1.18-orange?style=flat-square)](https://lenis.darkroom.engineering/)
+[![Lenis](https://img.shields.io/badge/Lenis_Scroll-1.3.26-orange?style=flat-square)](https://lenis.darkroom.engineering/)
 [![Nodemailer](https://img.shields.io/badge/Nodemailer-9.0.5-22B573?style=flat-square)](https://nodemailer.com/)
-[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](#)
 
-A world-class, high-converting redesign of the **Tcongs Infotech** ([https://tcongsinfotech.com](https://tcongsinfotech.com)) Home Page. Built with neo-digital architecture, **Lenis inertia-based smooth scrolling**, full Dark & Light mode system, continuous auto-scrolling & auto-advancing carousels with slow-on-hover physics, 100% mobile responsiveness, and **integrated Webverse Nodemailer email engine**.
+A world-class, full-scale digital engineering platform redesign for **Tcongs Infotech** ([https://tcongsinfotech.com](https://tcongsinfotech.com)). Built with modern React 19 architecture, **React Router dynamic routing**, **Plus Jakarta Sans** typography suite, **Lenis inertia-based smooth scrolling**, full Obsidian Dark & Clean Light mode systems, continuous marquees, interconnected internal linking, and **Webverse Nodemailer backend integration**.
 
 ---
 
-## 📸 Overview & Live Repositories
+## 🌐 Live URLs & Repositories
 
-- **Target Website**: [https://tcongsinfotech.com](https://tcongsinfotech.com)
-- **Local Frontend Dev Server**: `http://localhost:9001/`
-- **Local Nodemailer API Server**: `http://localhost:9002/`
+- **Production Deployed Domain**: [https://tcongsinfotech.thewebvale.com/](https://tcongsinfotech.thewebvale.com/)
 - **GitHub Repository**: [https://github.com/yashjainbackup9-crypto/tcongsinfotech](https://github.com/yashjainbackup9-crypto/tcongsinfotech)
-- **SSH Host Profile**: `github-backup-9` (`~/.ssh/yashjain.backup.9`)
+- **Local Dev Server**: `http://localhost:9001/`
+- **Local Nodemailer API Server**: `http://localhost:9002/`
 
 ---
 
-## 🌟 Standout Features Built to Win Evaluations
+## 🗺️ Complete Specialized Sitemap & Route Matrix
 
-### ⚡ 1. Universal Command Palette (`Cmd + K` / `Ctrl + K`)
-- **Spotlight Search & Quick Launcher**: Press `⌘K` or click the search pill to instantly search services, jump to sections, toggle theme, switch currencies, and trigger consultation bookings.
+### 1. Static Core Pages
+- **`/` (Home Hub)**: Dynamic hero terminal, live world clocks HUD (Mumbai, NY, Dubai, London), ecosystem ticker, services bento, tech matrix, Lighthouse speed benchmark (99/100), auto-advancing 6-step framework, featured case studies, multi-currency estimator, FAQs, contact form, and 4-tier luxury footer.
+- **`/about` (Company & Philosophy)**: *"Not Your Grandfather's Agency"* (Origin story, manifesto, 2018-2026 milestones, senior engineering squad, and office coordinates).
+- **`/services` (Services Catalog)**: 6 core engineering divisions with category filters (Engineering, Mobile, Commerce, Infrastructure, Intelligence, Design) and search.
+- **`/case-studies` (Case Studies & Transformations)**: Filterable client portfolio with verified revenue and latency metrics.
+- **`/pricing` (Sprint Estimator & Pricing)**: Interactive scope & timeline calculator with real-time multi-currency conversion (**USD $**, **INR ₹**, **AED د.إ**, **EUR €**, **GBP £**).
+- **`/careers` (Careers & Culture)**: Culture values (*"No 9 AM Standups"*, *"Ship to Prod on Week 1"*), active openings, and **dedicated direct job application form** with resume/portfolio dispatch.
+- **`/insights` (Engineering Playbooks & Insights)**: Thought leadership articles on Edge compute, React 19, and 50k checkout concurrency.
+- **`/contact` (Contact & Discovery Lab)**: 24/7 global dispatch coordinates (Mumbai, NY, Dubai, London), interactive inquiry form, and 30-min discovery call scheduler.
 
-### 💱 2. Real-Time Multi-Currency Engine (`CostEstimator.jsx`)
-- Supports **USD ($)**, **INR (₹)**, **AED (د.إ)**, **EUR (€)**, and **GBP (£)** with dynamic currency conversion and localized sprint delivery timelines.
-
-### 📊 3. Performance & Speed Benchmark (`PerformanceBenchmark.jsx`)
-- Audited side-by-side comparison between **Conventional Agencies (42/100 Lighthouse, 3.8s FCP)** and **Tcongs High-Velocity Stack (99/100 Lighthouse, 0.4s FCP)**.
-
-### 🌐 4. Live Global Time Zone & Operations HUD (`GlobalTimeHUD.jsx`)
-- Real-time world clocks for **Mumbai HQ (IST)**, **New York (EST)**, **Dubai (GST)**, and **London (GMT)** showing active 24/7 engineering availability and < 15 min response commitment.
-
-### 🌊 5. Lenis Inertia-Based Smooth Scrolling Engine
-- Smooth physics momentum scrolling across desktop, trackpads, and mobile touch devices with automatic `scroll-margin-top: 90px` anchor offsets.
-
-### 🎡 6. Continuous Auto-Scrolling & Auto-Advancing Carousels
-- **Auto-Changing Delivery Framework (`ProcessFlow.jsx`)**: Real-time gradient progress line (`0% → 100%`) over 3.8s with animated phase card transitions.
-- **Bidirectional Tech Stack Marquee (`TechMatrix.jsx`)**: Dual-row stream with **smooth slow-down on hover** (decelerates to 3.5x slower duration).
-- **Client & Ecosystem Marquee (`ClientTicker.jsx`)**: Infinite horizontal stream of official marketplace and framework icons.
-- **Testimonials Stream (`CaseStudies.jsx`)**: Continuous auto-scrolling client reviews with slow-on-hover mechanics.
-
-### 🌓 7. Obsidian Dark & Clean Light Mode
-- Dynamic theme switching with `localStorage` persistence, automatic Light ➔ Dark ➔ Light preview popup on first visit, and manual switch.
-
-### 📧 8. Webverse Nodemailer Lead Integration
-- Express server (`port 9002`) + Vercel serverless function (`/api/send-email`) sending branded HTML client confirmation emails and admin lead alerts.
-
----
-
-## 🏗️ Repository Architecture
-
-```
-tcongs-redesign/
-├── public/
-│   └── assets/                     # 53 extracted official SVG & WebP assets
-│       └── frontend-assets/
-│           └── images/
-│               ├── svgs/           # Official logo, dev, branding, chip-ai
-│               └── services-icons/ # Amazon, Flipkart, Shopify, React, Flutter, etc.
-├── server/
-│   ├── emailTemplates.js           # HTML email template generator
-│   └── server.js                   # Express Nodemailer API server (Port 9002)
-├── api/
-│   └── send-email.js               # Vercel serverless function
-├── src/
-│   ├── components/
-│   │   ├── Navbar.jsx              # Header, theme toggle, Cmd+K launcher, mobile drawer
-│   │   ├── CommandPalette.jsx      # Cmd+K universal spotlight search & quick actions
-│   │   ├── Hero.jsx                # Dynamic headline, stats counter, code terminal
-│   │   ├── ClientTicker.jsx        # Infinite scrolling platform & ecosystem banner
-│   │   ├── GlobalTimeHUD.jsx       # Real-time world clocks (Mumbai, NY, Dubai, London)
-│   │   ├── ServicesBento.jsx       # Auto-advancing service carousel with deep-dive modal
-│   │   ├── TechMatrix.jsx          # Dual-row continuous auto-scrolling tech marquee
-│   │   ├── PerformanceBenchmark.jsx# Legacy agency vs Tcongs 99/100 Lighthouse comparison
-│   │   ├── ProcessFlow.jsx         # Auto-advancing 6-step framework with progress bar
-│   │   ├── CaseStudies.jsx         # Auto-changing case studies & testimonial marquee
-│   │   ├── CostEstimator.jsx       # Interactive scope & multi-currency calculator (USD/INR/AED/EUR/GBP)
-│   │   ├── FAQSection.jsx          # Accordion FAQ with smooth toggles
-│   │   ├── ContactSection.jsx      # Form with Nodemailer API & celebration confetti
-│   │   ├── ConsultationModal.jsx   # 30-min discovery call scheduler modal
-│   │   ├── ThemeShowcaseModal.jsx  # Dark mode showcase popup with manual switch
-│   │   ├── SectionAutoScroller.jsx # Floating section locator & quick jump controls
-│   │   ├── Footer.jsx              # Global reach, sitemap, and newsletter
-│   │   └── ScrollReveal.jsx        # IntersectionObserver animate-on-scroll wrapper
-│   ├── context/
-│   │   └── ThemeContext.jsx        # Dark/Light theme state & localStorage
-│   ├── data/
-│   │   └── content.js              # Centralized data model for all sections
-│   ├── App.jsx                     # Master application layout + Lenis provider
-│   ├── index.css                   # Tailwind v4 tokens, Lenis rules, glassmorphism
-│   └── main.jsx                    # React 19 entry point
-├── .env                            # Webverse Nodemailer environment config
-├── .env.example                    # Template environment file
-├── vercel.json                     # Vercel SPA routing & serverless api
-├── netlify.toml                    # Netlify deployment configuration
-├── vite.config.js                  # Vite + Tailwind v4 + API proxy config
-└── package.json
-```
+### 2. Dynamic Template Pages (`/:slug`)
+- **`/services/:serviceSlug` (Dynamic Service Breakdowns)**:
+  - `/services/web-development`
+  - `/services/mobile-apps`
+  - `/services/ecommerce-marketplaces`
+  - `/services/cloud-devops`
+  - `/services/ai-automations`
+  - `/services/ui-ux-design`
+  *(Includes architecture flow, deliverables checklist, tech matrix, pricing tiers, FAQs, and related case studies)*.
+- **`/case-studies/:caseSlug` (Dynamic Case Breakdowns)**:
+  - `/case-studies/payflow-fintech` ($42M ARR, 45ms latency)
+  - `/case-studies/quickmed-healthtech` (0.2s WebRTC Telehealth)
+  - `/case-studies/hypermarket-ecommerce` (+310% Black Friday Surge)
+  - `/case-studies/zenith-saas` (AI RAG saving 45 hrs/week)
+  *(Includes challenge, solution, code snippet, metrics, client quote, and related services)*.
+- **`/insights/:slug` (Dynamic Tech Articles)**:
+  - `/insights/why-we-killed-monoliths`
+  - `/insights/react-19-for-enterprises`
+  - `/insights/scaling-ecommerce-50k-checkouts`
+  *(Includes full markdown content, code blocks, author bio, and 1-click share)*.
 
 ---
 
-## 🛠️ Getting Started Locally
+## ⚡ Standout Features & Engineering Highlights
+
+1. **Universal Spotlight Command Palette (`Cmd + K`)**: Instant keyboard search indexing all static and dynamic pages, theme toggling, and consultation triggers.
+2. **Dedicated Career Application Engine (`/careers`)**: Dedicated job submission form sending alerts directly to recruiters with celebration confetti.
+3. **Multi-Currency Pricing Calculator (`/pricing`)**: Dynamic sprint budget estimation across 5 international currencies.
+4. **4-Tier Luxury Footer Architecture**: Brand contact card, 4 categorized sitemaps, 5-pillar stats reassurance bar, consultation CTA cards, and SSL security copyright bar.
+5. **Lenis Inertia Physics & Scroll Restoration**: Fluid momentum scrolling with automatic `ScrollToTop` on route transitions and 90px anchor offsets.
+6. **Obsidian Dark & Clean Light Themes**: Persistent `localStorage` state with automated preview modal on first visit and adaptive SVG contrast filters.
+7. **End-to-End Nodemailer Backend Integration**: Express API server dispatching branded HTML client confirmation emails and admin lead alerts.
+
+---
+
+## 🛠️ Local Development & Setup
 
 ```bash
 # 1. Install dependencies
 npm install
 
-# 2. Terminal 1: Start Nodemailer API Server (Port 9002)
+# 2. Start Nodemailer API Server (Port 9002)
 npm run server
 
-# 3. Terminal 2: Start Vite Frontend (Port 9001)
+# 3. Start Vite Frontend (Port 9001)
 npm run dev -- --port 9001 --host
 ```
 

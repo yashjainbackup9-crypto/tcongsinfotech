@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   Sparkles, 
   Menu, 
@@ -9,7 +10,8 @@ import {
   Sun,
   Moon,
   Mail,
-  Search
+  Search,
+  Briefcase
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { CommandPalette } from './CommandPalette';
@@ -18,6 +20,8 @@ export const Navbar = ({ onOpenConsultation }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,37 +44,43 @@ export const Navbar = ({ onOpenConsultation }) => {
   }, [mobileMenuOpen]);
 
   const navLinks = [
-    { name: "Services", href: "#services" },
-    { name: "Tech Stack", href: "#tech-stack" },
-    { name: "Benchmark", href: "#benchmark" },
-    { name: "Process", href: "#process" },
-    { name: "Case Studies", href: "#case-studies" },
-    { name: "Estimator", href: "#estimator" },
-    { name: "Contact", href: "#contact" },
+    { name: "Services", href: "/services" },
+    { name: "Case Studies", href: "/case-studies" },
+    { name: "Estimator", href: "/pricing" },
+    { name: "About", href: "/about" },
+    { name: "Careers", href: "/careers" },
+    { name: "Insights", href: "/insights" },
+    { name: "Contact", href: "/contact" },
   ];
 
   const handleNavClick = (e, href) => {
+    setMobileMenuOpen(false);
     if (href.startsWith('#')) {
       e.preventDefault();
-      const targetId = href.replace('#', '');
-      const element = document.getElementById(targetId);
-      if (element) {
-        if (window.lenis) {
-          window.lenis.scrollTo(element, { offset: -80, duration: 1.2 });
-        } else {
-          element.scrollIntoView({ behavior: 'smooth' });
+      if (location.pathname !== '/') {
+        navigate('/' + href);
+      } else {
+        const targetId = href.replace('#', '');
+        const element = document.getElementById(targetId);
+        if (element) {
+          if (window.lenis) {
+            window.lenis.scrollTo(element, { offset: -80, duration: 1.2 });
+          } else {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
         }
       }
-      setMobileMenuOpen(false);
     }
   };
 
   const handleLogoClick = (e) => {
-    e.preventDefault();
-    if (window.lenis) {
-      window.lenis.scrollTo(0, { duration: 1.2 });
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (location.pathname === '/') {
+      e.preventDefault();
+      if (window.lenis) {
+        window.lenis.scrollTo(0, { duration: 1.2 });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     }
   };
 
@@ -85,9 +95,9 @@ export const Navbar = ({ onOpenConsultation }) => {
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           
-          {/* Brand Logo with Official Extracted SVG Asset */}
-          <a 
-            href="#" 
+          {/* Brand Logo */}
+          <Link 
+            to="/" 
             onClick={handleLogoClick}
             className="flex items-center gap-2.5 sm:gap-3 group focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none rounded-lg p-1"
           >
@@ -102,7 +112,7 @@ export const Navbar = ({ onOpenConsultation }) => {
                   if (fallback) fallback.style.display = 'flex';
                 }}
               />
-              {/* Fallback Badge if image load fails */}
+              {/* Fallback Badge */}
               <div className="hidden items-center gap-2">
                 <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-[#E51A4B] to-[#FF4D79] flex items-center justify-center shadow-lg shadow-[#E51A4B]/20">
                   <span className="font-extrabold text-white text-lg sm:text-xl tracking-tighter">T</span>
@@ -115,20 +125,27 @@ export const Navbar = ({ onOpenConsultation }) => {
                 </div>
               </div>
             </div>
-          </a>
+          </Link>
 
           {/* Desktop Navigation Links */}
           <nav className="hidden lg:flex items-center gap-1 bg-black/[0.03] dark:bg-white/[0.03] p-1.5 rounded-full border border-black/5 dark:border-white/[0.08] backdrop-blur-md">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="px-3.5 py-1.5 text-xs xl:text-sm font-medium text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-black/[0.05] dark:hover:bg-white/[0.08] rounded-full transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
-              >
-                {link.name}
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = location.pathname === link.href;
+              return (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className={`px-3.5 py-1.5 text-xs xl:text-sm font-semibold rounded-full transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#E51A4B] ${
+                    isActive 
+                      ? 'bg-[#E51A4B] text-white shadow-md shadow-[#E51A4B]/25' 
+                      : 'text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-black/[0.05] dark:hover:bg-white/[0.08]'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Action CTAs + Command Palette + Theme Toggle */}
@@ -199,15 +216,15 @@ export const Navbar = ({ onOpenConsultation }) => {
             </div>
 
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
-                href={link.href}
+                to={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
                 className="flex items-center justify-between text-base font-semibold text-[var(--text-main)] hover:text-[#E51A4B] py-3 border-b border-black/5 dark:border-white/[0.05] active:bg-black/5 dark:active:bg-white/5 px-2 rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-[#E51A4B]"
               >
                 <span>{link.name}</span>
                 <ChevronRight className="w-4 h-4 opacity-50" />
-              </a>
+              </Link>
             ))}
           </div>
 

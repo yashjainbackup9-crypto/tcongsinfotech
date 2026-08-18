@@ -1,22 +1,26 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Lenis from 'lenis';
 import { ThemeProvider } from './context/ThemeContext';
 import { Navbar } from './components/Navbar';
-import { Hero } from './components/Hero';
-import { ClientTicker } from './components/ClientTicker';
-import { ServicesBento } from './components/ServicesBento';
-import { TechMatrix } from './components/TechMatrix';
-import { PerformanceBenchmark } from './components/PerformanceBenchmark';
-import { ProcessFlow } from './components/ProcessFlow';
-import { CaseStudies } from './components/CaseStudies';
-import { CostEstimator } from './components/CostEstimator';
-import { FAQSection } from './components/FAQSection';
-import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { ConsultationModal } from './components/ConsultationModal';
-import { SectionAutoScroller } from './components/SectionAutoScroller';
 import { ThemeShowcaseModal } from './components/ThemeShowcaseModal';
-import { MessageSquare, PhoneCall, ArrowUp } from 'lucide-react';
+import { ScrollToTop } from './components/ScrollToTop';
+import { PhoneCall, ArrowUp } from 'lucide-react';
+
+// Pages
+import { HomePage } from './pages/HomePage';
+import { AboutPage } from './pages/AboutPage';
+import { ServicesPage } from './pages/ServicesPage';
+import { ServiceDetailPage } from './pages/ServiceDetailPage';
+import { CaseStudiesPage } from './pages/CaseStudiesPage';
+import { CaseStudyDetailPage } from './pages/CaseStudyDetailPage';
+import { PricingPage } from './pages/PricingPage';
+import { CareersPage } from './pages/CareersPage';
+import { InsightsPage } from './pages/InsightsPage';
+import { InsightDetailPage } from './pages/InsightDetailPage';
+import { ContactPage } from './pages/ContactPage';
 
 export function MainLayout() {
   const [consultationModalOpen, setConsultationModalOpen] = useState(false);
@@ -66,27 +70,69 @@ export function MainLayout() {
   return (
     <div className="min-h-screen bg-[var(--bg-page)] text-[var(--text-main)] selection:bg-[#E51A4B] selection:text-white font-sans relative transition-colors duration-400">
       
-      {/* Top Navbar with Cmd+K Command Palette */}
+      {/* Scroll restoration helper */}
+      <ScrollToTop />
+
+      {/* Top Navbar with Cmd+K Command Palette & Multi-Page Routing */}
       <Navbar onOpenConsultation={() => handleOpenConsultation()} />
 
-      {/* Main Home Page Sections */}
-      <main>
-        <Hero onOpenConsultation={() => handleOpenConsultation()} />
-        <ClientTicker />
-        <ServicesBento onSelectService={(serviceName) => handleOpenConsultation({ project: serviceName, budget: '$5,000 - $15,000' })} />
-        <TechMatrix />
-        <PerformanceBenchmark onOpenConsultation={() => handleOpenConsultation()} />
-        <ProcessFlow />
-        <CaseStudies onOpenConsultation={() => handleOpenConsultation()} />
-        <CostEstimator onBookEstimate={(estimateData) => handleOpenConsultation(estimateData)} />
-        <FAQSection onOpenConsultation={() => handleOpenConsultation()} />
-        <ContactSection prefillData={estimatorPrefill} />
-      </main>
+      {/* Dynamic Multi-Page Router Switch */}
+      <Routes>
+        <Route 
+          path="/" 
+          element={<HomePage onOpenConsultation={handleOpenConsultation} estimatorPrefill={estimatorPrefill} />} 
+        />
+        <Route 
+          path="/about" 
+          element={<AboutPage onOpenConsultation={handleOpenConsultation} />} 
+        />
+        <Route 
+          path="/services" 
+          element={<ServicesPage onOpenConsultation={handleOpenConsultation} />} 
+        />
+        <Route 
+          path="/services/:serviceSlug" 
+          element={<ServiceDetailPage onOpenConsultation={handleOpenConsultation} />} 
+        />
+        <Route 
+          path="/case-studies" 
+          element={<CaseStudiesPage onOpenConsultation={handleOpenConsultation} />} 
+        />
+        <Route 
+          path="/case-studies/:caseSlug" 
+          element={<CaseStudyDetailPage onOpenConsultation={handleOpenConsultation} />} 
+        />
+        <Route 
+          path="/pricing" 
+          element={<PricingPage onOpenConsultation={handleOpenConsultation} />} 
+        />
+        <Route 
+          path="/careers" 
+          element={<CareersPage />} 
+        />
+        <Route 
+          path="/insights" 
+          element={<InsightsPage />} 
+        />
+        <Route 
+          path="/insights/:slug" 
+          element={<InsightDetailPage onOpenConsultation={handleOpenConsultation} />} 
+        />
+        <Route 
+          path="/contact" 
+          element={<ContactPage onOpenConsultation={handleOpenConsultation} estimatorPrefill={estimatorPrefill} />} 
+        />
+        {/* Fallback Catch-All */}
+        <Route 
+          path="*" 
+          element={<HomePage onOpenConsultation={handleOpenConsultation} estimatorPrefill={estimatorPrefill} />} 
+        />
+      </Routes>
 
-      {/* Global Footer */}
+      {/* Luxury 4-Tier Footer with Subpage Links */}
       <Footer onOpenConsultation={() => handleOpenConsultation()} />
 
-      {/* Interactive Consultation Modal */}
+      {/* Interactive 30-Min Consultation Modal */}
       <ConsultationModal
         isOpen={consultationModalOpen}
         onClose={() => {
@@ -96,17 +142,14 @@ export function MainLayout() {
         initialData={estimatorPrefill}
       />
 
-      {/* Interactive Theme Showcase Popup */}
+      {/* Executive Dark Mode Showcase Preview Popup */}
       <ThemeShowcaseModal />
 
-      {/* Bottom Floating Section Auto-Scroll Showcase Controller */}
-      <SectionAutoScroller />
-
-      {/* Floating Action Button (Quick Call / Scroll Top) */}
+      {/* Floating Quick Action Buttons */}
       <div className="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
         <button
           onClick={scrollToTop}
-          className="w-10 h-10 rounded-full bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/10 dark:hover:bg-white/20 text-[var(--text-main)] border border-black/10 dark:border-white/10 backdrop-blur-md flex items-center justify-center transition-all shadow-lg hidden sm:flex hover:scale-110 active:scale-95 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
+          className="w-10 h-10 rounded-full bg-black/[0.06] dark:bg-white/[0.08] hover:bg-black/10 dark:hover:bg-white/20 text-[var(--text-main)] border border-black/10 dark:border-white/10 backdrop-blur-md flex items-center justify-center transition-all shadow-lg hidden sm:flex hover:scale-110 active:scale-95 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none cursor-pointer"
           aria-label="Scroll to top"
           title="Scroll to top"
         >
@@ -115,7 +158,7 @@ export function MainLayout() {
 
         <button
           onClick={() => handleOpenConsultation()}
-          className="relative group p-3.5 sm:px-5 sm:py-3 rounded-full bg-gradient-to-r from-[#E51A4B] to-[#D01540] text-white font-bold text-xs shadow-2xl shadow-[#E51A4B]/40 hover:scale-105 active:scale-95 transition-all flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
+          className="relative group p-3.5 sm:px-5 sm:py-3 rounded-full bg-gradient-to-r from-[#E51A4B] to-[#D01540] text-white font-bold text-xs shadow-2xl shadow-[#E51A4B]/40 hover:scale-105 active:scale-95 transition-all flex items-center gap-2 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none cursor-pointer"
         >
           <span className="w-2 h-2 rounded-full bg-white animate-ping"></span>
           <PhoneCall className="w-4 h-4" />
@@ -130,7 +173,9 @@ export function MainLayout() {
 export function App() {
   return (
     <ThemeProvider>
-      <MainLayout />
+      <BrowserRouter>
+        <MainLayout />
+      </BrowserRouter>
     </ThemeProvider>
   );
 }
