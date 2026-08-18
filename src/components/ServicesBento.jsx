@@ -124,20 +124,10 @@ export const ServicesBento = ({ onSelectService }) => {
             {/* Carousel Navigation Buttons */}
             <div className="flex items-center gap-2 mt-4 md:mt-0">
               <button
-                onClick={() => setIsAutoPlay(!isAutoPlay)}
-                className={`p-2.5 rounded-full border transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none ${
-                  isAutoPlay
-                    ? 'bg-black/[0.04] dark:bg-white/[0.06] border-black/15 dark:border-white/15 text-[var(--text-main)] hover:border-[#E51A4B] hover:text-[#E51A4B]'
-                    : 'bg-[#E51A4B]/10 border-[#E51A4B]/30 text-[#E51A4B] hover:bg-[#E51A4B] hover:text-white'
-                }`}
-                title={isAutoPlay ? "Pause Auto-play" : "Start Auto-play"}
-              >
-                {isAutoPlay ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-              </button>
-              <button
                 onClick={handlePrev}
                 className="p-2.5 rounded-full bg-black/[0.04] dark:bg-white/[0.06] border border-black/15 dark:border-white/15 text-[var(--text-main)] hover:bg-[#E51A4B] hover:border-[#E51A4B] hover:text-white hover:scale-105 active:scale-95 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
                 aria-label="Previous Service"
+                title="Previous Service"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
@@ -145,6 +135,7 @@ export const ServicesBento = ({ onSelectService }) => {
                 onClick={handleNext}
                 className="p-2.5 rounded-full bg-black/[0.04] dark:bg-white/[0.06] border border-black/15 dark:border-white/15 text-[var(--text-main)] hover:bg-[#E51A4B] hover:border-[#E51A4B] hover:text-white hover:scale-105 active:scale-95 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
                 aria-label="Next Service"
+                title="Next Service"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, ChevronDown, ChevronUp, Compass, Sparkles } from 'lucide-react';
+import { ChevronDown, ChevronUp, Compass, Sparkles } from 'lucide-react';
 
 const SECTIONS = [
   { id: 'hero', name: 'Overview' },
@@ -8,22 +8,13 @@ const SECTIONS = [
   { id: 'tech-stack', name: 'Tech Matrix' },
   { id: 'process', name: 'Framework' },
   { id: 'case-studies', name: 'Case Studies' },
-  { id: 'cost-estimator', name: 'Estimator' },
+  { id: 'estimator', name: 'Estimator' },
   { id: 'faq', name: 'FAQ' },
   { id: 'contact', name: 'Contact' }
 ];
 
 export const SectionAutoScroller = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
-  const [isMinimized, setIsMinimized] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const timerRef = useRef(null);
-  const progressIntervalRef = useRef(null);
-  const isUserScrollingRef = useRef(false);
-
-  // Section Duration: 7 seconds per section
-  const SECTION_DURATION = 7000;
 
   const scrollToSection = (index) => {
     const section = SECTIONS[index];
@@ -40,7 +31,6 @@ export const SectionAutoScroller = () => {
       }
     }
     setCurrentSectionIndex(index);
-    setProgress(0);
   };
 
   const handleNextSection = () => {
@@ -53,74 +43,36 @@ export const SectionAutoScroller = () => {
     scrollToSection(prevIndex);
   };
 
-  // Automated Progression Loop
+  // Sync with scroll position
   useEffect(() => {
-    if (isPlaying) {
-      const startTime = Date.now();
-      
-      progressIntervalRef.current = setInterval(() => {
-        const elapsed = Date.now() - startTime;
-        const pct = Math.min(100, (elapsed / SECTION_DURATION) * 100);
-        setProgress(pct);
-      }, 100);
-
-      timerRef.current = setTimeout(() => {
-        handleNextSection();
-      }, SECTION_DURATION);
-    } else {
-      setProgress(0);
-      if (timerRef.current) clearTimeout(timerRef.current);
-      if (progressIntervalRef.current) clearInterval(progressIntervalRef.current);
-    }
-
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-      if (progressIntervalRef.current) clearInterval(progressIntervalRef.current);
-    };
-  }, [isPlaying, currentSectionIndex]);
-
-  // Pause on manual user scroll
-  useEffect(() => {
-    let scrollTimeout;
     const handleScroll = () => {
-      if (!isUserScrollingRef.current) {
-        // Detect user manual interaction
+      const scrollPosition = window.scrollY + 120;
+      for (let i = SECTIONS.length - 1; i >= 0; i--) {
+        const section = SECTIONS[i];
+        if (section.id === 'hero' && scrollPosition < 400) {
+          setCurrentSectionIndex(0);
+          break;
+        }
+        const el = document.getElementById(section.id);
+        if (el && el.offsetTop <= scrollPosition) {
+          setCurrentSectionIndex(i);
+          break;
+        }
       }
     };
 
-    window.addEventListener('wheel', handleScroll, { passive: true });
-    window.addEventListener('touchmove', handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('wheel', handleScroll);
-      window.removeEventListener('touchmove', handleScroll);
-    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <div className="fixed bottom-6 left-6 z-40">
       <div className="glass-panel p-2 sm:p-2.5 rounded-full border border-black/10 dark:border-white/15 shadow-2xl backdrop-blur-xl flex items-center gap-2 transition-all">
         
-        {/* Play/Pause Toggle */}
-        <button
-          onClick={() => setIsPlaying(!isPlaying)}
-          className={`p-2 sm:p-2.5 rounded-full transition-all flex items-center justify-center ${
-            isPlaying 
-              ? 'bg-[#E51A4B] text-white shadow-md shadow-[#E51A4B]/30' 
-              : 'bg-black/[0.05] dark:bg-white/[0.08] text-[var(--text-main)] hover:bg-[#E51A4B] hover:text-white'
-          }`}
-          title={isPlaying ? "Pause Auto-Scroll Tour" : "Start Auto-Scroll Tour"}
-          aria-label={isPlaying ? "Pause Auto-Scroll" : "Start Auto-Scroll"}
-        >
-          {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 translate-x-0.5" />}
-        </button>
-
-        {/* Section Label & Progress */}
-        <div className="flex items-center gap-2 px-2 text-xs font-semibold text-[var(--text-main)]">
-          <span className="hidden sm:inline text-[11px] font-mono text-[#E51A4B] dark:text-[#E2EC07] uppercase">
-            {isPlaying ? 'Auto Tour' : 'Sections'}:
-          </span>
-          <span className="text-[11px] sm:text-xs">
+        {/* Active Section Dot & Label */}
+        <div className="flex items-center gap-2 pl-2 pr-1 text-xs font-semibold text-[var(--text-main)]">
+          <span className="w-2 h-2 rounded-full bg-[#E51A4B] animate-pulse"></span>
+          <span className="text-[11px] sm:text-xs font-bold">
             {SECTIONS[currentSectionIndex]?.name}
           </span>
           <span className="text-[10px] text-[var(--text-muted)] font-mono">
@@ -129,10 +81,10 @@ export const SectionAutoScroller = () => {
         </div>
 
         {/* Up/Down Step Buttons */}
-        <div className="flex items-center gap-1 border-l border-black/10 dark:border-white/10 pl-2">
+        <div className="flex items-center gap-1 border-l border-black/10 dark:border-white/10 pl-1.5">
           <button
             onClick={handlePrevSection}
-            className="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors"
+            className="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
             title="Previous Section"
             aria-label="Previous Section"
           >
@@ -140,7 +92,7 @@ export const SectionAutoScroller = () => {
           </button>
           <button
             onClick={handleNextSection}
-            className="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors"
+            className="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none"
             title="Next Section"
             aria-label="Next Section"
           >
