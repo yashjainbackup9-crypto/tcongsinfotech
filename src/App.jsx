@@ -4,7 +4,6 @@ import { ThemeProvider } from './context/ThemeContext';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { ClientTicker } from './components/ClientTicker';
-import { GlobalTimeHUD } from './components/GlobalTimeHUD';
 import { ServicesBento } from './components/ServicesBento';
 import { TechMatrix } from './components/TechMatrix';
 import { PerformanceBenchmark } from './components/PerformanceBenchmark';
@@ -74,7 +73,6 @@ export function MainLayout() {
       <main>
         <Hero onOpenConsultation={() => handleOpenConsultation()} />
         <ClientTicker />
-        <GlobalTimeHUD onOpenConsultation={() => handleOpenConsultation()} />
         <ServicesBento onSelectService={(serviceName) => handleOpenConsultation({ project: serviceName, budget: '$5,000 - $15,000' })} />
         <TechMatrix />
         <PerformanceBenchmark onOpenConsultation={() => handleOpenConsultation()} />
