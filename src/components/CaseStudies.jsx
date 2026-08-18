@@ -17,27 +17,57 @@ export const CaseStudies = ({ onOpenConsultation }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
-  const autoPlayRef = useRef(null);
+  const [progress, setProgress] = useState(0);
+  const timerRef = useRef(null);
+  const intervalRef = useRef(null);
 
   const totalSlides = CASE_STUDIES.length;
+  const SLIDE_DURATION = 4000;
 
   useEffect(() => {
     if (isAutoPlay && !isHovered) {
-      autoPlayRef.current = setInterval(() => {
+      setProgress(0);
+      const startTime = Date.now();
+
+      intervalRef.current = setInterval(() => {
+        const elapsed = Date.now() - startTime;
+        const currentPct = Math.min(100, (elapsed / SLIDE_DURATION) * 100);
+        setProgress(currentPct);
+      }, 50);
+
+      timerRef.current = setTimeout(() => {
         setCurrentSlide((prev) => (prev + 1) % totalSlides);
-      }, 4000);
+      }, SLIDE_DURATION);
+    } else {
+      if (timerRef.current) clearTimeout(timerRef.current);
+      if (intervalRef.current) clearInterval(intervalRef.current);
     }
+
     return () => {
-      if (autoPlayRef.current) clearInterval(autoPlayRef.current);
+      if (timerRef.current) clearTimeout(timerRef.current);
+      if (intervalRef.current) clearInterval(intervalRef.current);
     };
-  }, [isAutoPlay, isHovered, totalSlides]);
+  }, [currentSlide, isAutoPlay, isHovered, totalSlides]);
 
   const handlePrev = () => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    setProgress(0);
     setCurrentSlide((prev) => (prev === 0 ? totalSlides - 1 : prev - 1));
   };
 
   const handleNext = () => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    setProgress(0);
     setCurrentSlide((prev) => (prev + 1) % totalSlides);
+  };
+
+  const handleSelectSlide = (idx) => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    setProgress(0);
+    setCurrentSlide(idx);
   };
 
   const activeStudy = CASE_STUDIES[currentSlide];
@@ -98,18 +128,17 @@ export const CaseStudies = ({ onOpenConsultation }) => {
           <div 
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="glass-panel p-6 sm:p-10 rounded-3xl border border-black/10 dark:border-white/15 text-left relative overflow-hidden shadow-2xl mb-16 group/card"
+            className="glass-panel p-6 sm:p-10 rounded-3xl border border-black/10 dark:border-white/15 text-left relative overflow-hidden shadow-2xl mb-16 group/card min-h-[380px] flex flex-col justify-between"
           >
             {/* Top Auto Progress Bar */}
             <div className="absolute top-0 left-0 right-0 h-1 bg-black/10 dark:bg-white/10">
               <div 
-                key={currentSlide}
-                className="h-full bg-gradient-to-r from-[#E51A4B] to-[#E2EC07] transition-all duration-[4000ms] ease-linear"
-                style={{ width: isHovered ? '100%' : '100%' }}
+                className="h-full bg-gradient-to-r from-[#E51A4B] via-[#FF4D79] to-[#E2EC07] transition-all duration-75 ease-linear"
+                style={{ width: `${progress}%` }}
               ></div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div key={currentSlide} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center animate-in fade-in slide-in-from-right-3 duration-300">
               
               {/* Left Column: Metrics and Title */}
               <div className="lg:col-span-7 flex flex-col justify-between">
@@ -180,7 +209,7 @@ export const CaseStudies = ({ onOpenConsultation }) => {
               {CASE_STUDIES.map((_, i) => (
                 <button
                   key={i}
-                  onClick={() => setCurrentSlide(i)}
+                  onClick={() => handleSelectSlide(i)}
                   className={`h-2.5 rounded-full transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[#E51A4B] focus-visible:outline-none ${
                     i === currentSlide 
                       ? 'w-8 bg-[#E51A4B] shadow-sm' 
